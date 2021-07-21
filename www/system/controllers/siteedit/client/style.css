@@ -1,0 +1,22 @@
+.edit-box-site-hover:before{
+    display: block;
+    content: "";
+    background: url(pen.png);
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    z-index: 99999;
+    cursor: pointer;
+    left:50%;
+    margin-left:-15px;
+
+}
+.edit-box-site-hover{
+    opacity: 0.6;
+}
+img.edit-box-site{
+    cursor: pointer;
+}
+img.edit-box-site:hover{
+    opacity: 0.6;
+}

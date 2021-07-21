@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 14 7.312" width="14" height="7.312">
+    <defs>
+        <filter id="a" x="1336" y="192.688" width="13" height="6.312" filterUnits="userSpaceOnUse">
+            <feFlood result="flood" flood-color="#fff"/>
+            <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+            <feBlend result="blend" in2="SourceGraphic"/>
+        </filter>
+    </defs>
+    <g transform="translate(-1335.5 -192.188)" fill="none" filter="url(#a)">
+        <path id="b" d="M1349 193.459l-6.49 5.541-6.51-5.538" stroke="inherit" filter="none" fill="inherit" stroke-width="1" fill-rule="evenodd"/>
+    </g>
+    <use transform="translate(-1335.5 -192.188)" xlink:href="#b" stroke="#ffffff" filter="none" fill="none"/>
+</svg>
