@@ -824,7 +824,7 @@ class CatalogController extends Controller {
             'HASH' => $hash,
         );
         $this->db->insert('agcms_cart', $params);
-
+       
     }
 
     public function AddOrder(){
