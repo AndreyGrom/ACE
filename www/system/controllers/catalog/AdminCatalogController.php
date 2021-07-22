@@ -52,7 +52,7 @@ class AdminCatalogController extends AdminController {
         $delete_image     = $this->post['delete_image'];
         $old_image        = $this->post['old_image'];
 
-        $sql = "SELECT * FROM `".db_pref."catalog_c` WHERE `ALIAS`='$alias'";
+        $sql = "SELECT * FROM `agcms_catalog_c` WHERE `ALIAS`='$alias'";
         if ($this->act!=='new_c'){
             $sql .= " AND ID <> $this->cid";
         }
@@ -63,7 +63,7 @@ class AdminCatalogController extends AdminController {
 
             if ($this->act == 'new_c'){
                 $sql = "
-                    INSERT INTO `".db_pref."catalog_c` (
+                    INSERT INTO `agcms_catalog_c` (
                     `PARENT`,`TITLE`, `DESC`, `DESC2`, `ALIAS`, `META_DESC`,`META_KEYWORDS`, `PUBLIC`,`TEMPLATE`, `POSITION`, `IMAGE`)
                     VALUES
                     ('$parent','$title','$desc','$desc2', '$alias','$meta_desc','$meta_keywords','$publ','$template','99999','$image')";
@@ -82,7 +82,7 @@ class AdminCatalogController extends AdminController {
                         unlink($old_image);
                     }
                 }
-                $sql = "UPDATE `".db_pref."catalog_c` SET
+                $sql = "UPDATE `agcms_catalog_c` SET
                 `PARENT` = '$parent',
                 `TITLE` = '$title',
                 `DESC` = '$desc',
@@ -207,7 +207,7 @@ class AdminCatalogController extends AdminController {
 
     public function getCategories($parent = false){
         $categories = array();
-        $sql = "SELECT * FROM `".db_pref."catalog_c` ORDER BY `ID`";
+        $sql = "SELECT * FROM `agcms_catalog_c` ORDER BY `ID`";
         $query = $this->db->query($sql);
         for ($i=0; $i < $this->db->num_rows($query); $i++) {
             $row = $this->db->fetch_array($query);
@@ -221,7 +221,7 @@ class AdminCatalogController extends AdminController {
         if ($parent){
             $where = "WHERE `PARENT` LIKE '%,$parent,%'";
         }
-        $sql = "SELECT * FROM `".db_pref."catalog_i` $where";
+        $sql = "SELECT * FROM `agcms_catalog_i` $where";
         $query = $this->db->query($sql);
         $total = $this->db->num_rows($query);
         $this->num_pages = ceil($total / $this->per_page);
@@ -243,7 +243,7 @@ class AdminCatalogController extends AdminController {
             $where = "WHERE `PARENT` LIKE '%,$parent,%'";
         }
 
-        $sql = "SELECT * FROM `".db_pref."catalog_i` $where ORDER BY `ID` DESC $limit";
+        $sql = "SELECT * FROM `agcms_catalog_i` $where ORDER BY `ID` DESC $limit";
         $query = $this->db->query($sql);
         for ($i=0; $i < $this->db->num_rows($query); $i++) {
             $row = $this->db->fetch_array($query);
@@ -255,7 +255,7 @@ class AdminCatalogController extends AdminController {
     }
     public function getCategory($cid){
         $row = array();
-        $sql = "SELECT * FROM `".db_pref."catalog_c` WHERE `ID`=$cid LIMIT 1";
+        $sql = "SELECT * FROM `agcms_catalog_c` WHERE `ID`=$cid LIMIT 1";
         $query = $this->db->query($sql);
         if ($this->db->num_rows($query)>0){
             $row = $this->db->fetch_array($query);
@@ -269,8 +269,8 @@ class AdminCatalogController extends AdminController {
     }
     public function getItem($id){
         $sql = "SELECT i.*, c.ID AS CID, c.TITLE AS CAT_NAME, c.ALIAS AS CAT_ALIAS
-        FROM `".db_pref."catalog_i` i
-        LEFT JOIN `".db_pref."catalog_c` c ON i.PARENT=c.ID
+        FROM `agcms_catalog_i` i
+        LEFT JOIN `agcms_catalog_c` c ON i.PARENT=c.ID
         WHERE i.`ID`=$id  LIMIT 1";
         $query = $this->db->query($sql);
         $row = $this->db->fetch_array($query);
@@ -355,10 +355,10 @@ class AdminCatalogController extends AdminController {
     }
 
     public function DeleteCategory($id){
-        $sql = "SELECT * FROM `".db_pref."catalog_i` WHERE `PARENT` LIKE '%,$id,%'";
+        $sql = "SELECT * FROM `agcms_catalog_i` WHERE `PARENT` LIKE '%,$id,%'";
         $query = $this->db->query($sql);
         if ($this->db->num_rows($query) == 0){
-            $sql = "DELETE FROM `".db_pref."catalog_c` WHERE `ID`=$id";
+            $sql = "DELETE FROM `agcms_catalog_c` WHERE `ID`=$id";
             $query = $this->db->query($sql);
             $this->Head('?c=catalog');
         } else {
@@ -367,7 +367,7 @@ class AdminCatalogController extends AdminController {
         }
     }
     public function DeleteItem($id){
-        $sql = "SELECT * FROM `".db_pref."catalog_i` WHERE `ID`=$id LIMIT 1";
+        $sql = "SELECT * FROM `agcms_catalog_i` WHERE `ID`=$id LIMIT 1";
         $query = $this->db->query($sql);
         $row = $this->db->fetch_array($query);
         if ($row['IMAGES']!==''){
@@ -378,7 +378,7 @@ class AdminCatalogController extends AdminController {
                 }
             }
         }
-        $sql = "DELETE FROM `".db_pref."catalog_i` WHERE `ID`=$id";
+        $sql = "DELETE FROM `agcms_catalog_i` WHERE `ID`=$id";
         $query = $this->db->query($sql);
     }
     public function ShowCategory($row){
@@ -402,7 +402,7 @@ class AdminCatalogController extends AdminController {
         $this->content = $this->SetTemplate('cat.tpl');
     }
     public function ShowItem($row){
-        $sql = "SELECT * FROM `".db_pref."country` ORDER BY `COUNTRY_NAME`";
+        $sql = "SELECT * FROM `agcms_country` ORDER BY `COUNTRY_NAME`";
         $query = $this->db->query($sql);
         for ($i=0; $i < $this->db->num_rows($query); $i++) {
             $row2 = $this->db->fetch_array($query);
@@ -410,7 +410,7 @@ class AdminCatalogController extends AdminController {
         }
         if (isset($row['COUNTRY_ID'])){
             $country_id = $row['COUNTRY_ID'];
-            $sql = "SELECT * FROM `".db_pref."city` WHERE `COUNTRY_ID`= $country_id  ORDER BY `CITY_NAME`";
+            $sql = "SELECT * FROM `agcms_city` WHERE `COUNTRY_ID`= $country_id  ORDER BY `CITY_NAME`";
             $query = $this->db->query($sql);
             for ($i=0; $i < $this->db->num_rows($query); $i++) {
                 $row2 = $this->db->fetch_array($query);
@@ -422,7 +422,7 @@ class AdminCatalogController extends AdminController {
 
         /*if ($row['REGION_ID']){
             $region_id = $row['REGION_ID'];
-            $sql = "SELECT * FROM `".db_pref."city` WHERE `REGION_ID`= $region_id  ORDER BY `CITY_NAME`";
+            $sql = "SELECT * FROM `agcms_city` WHERE `REGION_ID`= $region_id  ORDER BY `CITY_NAME`";
             $query = $this->db->query($sql);
             for ($i=0; $i < $this->db->num_rows($query); $i++) {
                 $row2 = $this->db->fetch_array($query);
@@ -432,7 +432,7 @@ class AdminCatalogController extends AdminController {
             }
         }*/
 
-        $sql = "SELECT * FROM `".db_pref."catalog_nets`";
+        $sql = "SELECT * FROM `agcms_catalog_nets`";
         $nets = $this->db->select($sql);
         $this->assign(array(
             'countrys'                    => $countrys,
@@ -448,7 +448,7 @@ class AdminCatalogController extends AdminController {
 
     public function getSiteMap(){
         $return = array();
-        $sql = "SELECT ALIAS FROM `".db_pref."catalog_i`  WHERE `PUBLIC`=1 ORDER BY `DATE_PUBL` DESC";
+        $sql = "SELECT ALIAS FROM `agcms_catalog_i`  WHERE `PUBLIC`=1 ORDER BY `DATE_PUBL` DESC";
         $result = $this->db->query($sql);
         if ($this->db->num_rows($result)){
             for ($i = 0; $i < $this->db->num_rows($result); $i++){
@@ -461,13 +461,13 @@ class AdminCatalogController extends AdminController {
             }
         }
 
-        $sql = "SELECT * FROM `".db_pref."catalog_c` WHERE `PUBLIC`=1";
+        $sql = "SELECT * FROM `agcms_catalog_c` WHERE `PUBLIC`=1";
         $result = $this->db->query($sql);
         if ($this->db->num_rows($result)){
             for ($i = 0; $i < $this->db->num_rows($result); $i++){
                 $row = $this->db->fetch_array($result);
                 $parent_id = $row['ID'];
-                $sql = "SELECT COUNT(*) AS CNT FROM `".db_pref."catalog_i` WHERE `PARENT` LIKE '%,$parent_id,%' AND `PUBLIC`=1";
+                $sql = "SELECT COUNT(*) AS CNT FROM `agcms_catalog_i` WHERE `PARENT` LIKE '%,$parent_id,%' AND `PUBLIC`=1";
                 $result2 = $this->db->query($sql);
                 if ($this->db->num_rows($result2)){
                     $row2 = $this->db->fetch_array($result2);
@@ -614,10 +614,10 @@ class AdminCatalogController extends AdminController {
     }
 
     public function ShowCourses(){
-        $sql = "SELECT c.*, i.ID AS S_ID, i.TITLE AS S_TITLE FROM `".db_pref."catalog_courses` c
+        $sql = "SELECT c.*, i.ID AS S_ID, i.TITLE AS S_TITLE FROM `agcms_catalog_courses` c
         LEFT JOIN agcms_catalog_i i ON  (c.SH_ID = i.ID OR c.NET_ID = i.NET_ID) AND (c.NET_ID > 0 OR c.SH_ID > 0)
         GROUP BY c.ID ORDER BY c.ID DESC";
-        $sql = "SELECT c.*, i.ID AS S_ID, i.TITLE AS S_TITLE FROM `".db_pref."catalog_courses` c
+        $sql = "SELECT c.*, i.ID AS S_ID, i.TITLE AS S_TITLE FROM `agcms_catalog_courses` c
         LEFT JOIN agcms_catalog_i i ON  c.SH_ID = i.ID
         GROUP BY c.ID ORDER BY c.ID DESC";
         $params = array(

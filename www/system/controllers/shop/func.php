@@ -21,13 +21,13 @@ function GetOptions(){
     $db = Database::getInstance();
     $options_temp = array();
     $params_temp = array();
-    $sql = "SELECT * FROM `".db_pref."options`";
+    $sql = "SELECT * FROM `agcms_options`";
     $query = $db->query($sql);
     for ($i=0; $i < $db->num_rows($query); $i++) {
         $row = $db->fetch_array($query);
         $options_temp[] = $row;
     }
-    $sql = "SELECT * FROM `".db_pref."options_parameter`";
+    $sql = "SELECT * FROM `agcms_options_parameter`";
     $query = $db->query($sql);
     for ($i=0; $i < $db->num_rows($query); $i++) {
         $row = $db->fetch_array($query);
@@ -95,7 +95,7 @@ function GetProductsCart($list=false){
         }
         if ($s !== ''){
             $db = Database::getInstance();
-            $sql = "SELECT * FROM `".db_pref."shop_i` WHERE `PUBLIC`=1 AND `ID` IN ($s)";
+            $sql = "SELECT * FROM `agcms_shop_i` WHERE `PUBLIC`=1 AND `ID` IN ($s)";
             $query = $db->query($sql);
             for ($i=0; $i < $db->num_rows($query); $i++) {
                 $row = $db->fetch_array($query);

@@ -22,7 +22,7 @@ if (isset($_FILES)){
         $id = $_GET['id'];
         $images = array();
         $upload_path = $_SERVER['DOCUMENT_ROOT'].'/'.UPLOAD_IMAGES_DIR.'shop/';
-        $sql = "SELECT * FROM `".db_pref."shop_i` WHERE ID=$id";
+        $sql = "SELECT * FROM `agcms_shop_i` WHERE ID=$id";
         $query = $db->query($sql);
         $row = $db->fetch_array($query);
         $str = $row["IMAGES"];
@@ -39,7 +39,7 @@ if (isset($_FILES)){
                     $skin = ", SKIN='".$images[0]."'";
                 }
                 $str = implode(",", $images);
-                $sql = "UPDATE `".db_pref."shop_i` SET `IMAGES`='$str' $skin WHERE ID=$id";
+                $sql = "UPDATE `agcms_shop_i` SET `IMAGES`='$str' $skin WHERE ID=$id";
                 $query = $db->query($sql);
                 $smarty->assign(array(
                     'image' => $image,
@@ -58,7 +58,7 @@ if (isset($_FILES)){
         $upload_file = Func::getInstance()->UploadFile($_FILES["file"]['name'],$_FILES["file"]['tmp_name'], $upload_path);
         if ($upload_file) {
             $original_name = $_FILES["file"]["name"];
-            $sql = "SELECT * FROM `".db_pref."shop_i` WHERE ID=$id";
+            $sql = "SELECT * FROM `agcms_shop_i` WHERE ID=$id";
             $query = $db->query($sql);
             $row = $db->fetch_array($query);
             $str = $row["FILES"];
@@ -74,7 +74,7 @@ if (isset($_FILES)){
             );
             $files[] = $file_info;
             $str = serialize($files);
-            $sql = "UPDATE `".db_pref."shop_i` SET `FILES`='$str' WHERE ID=$id";
+            $sql = "UPDATE `agcms_shop_i` SET `FILES`='$str' WHERE ID=$id";
             $query = $db->query($sql);
         }
         $smarty->assign(array(
@@ -87,14 +87,14 @@ if (isset($_FILES)){
 if (isset($_POST['skin'])){
     $id = $_POST['id'];
     $skin = $_POST['skin'];
-    $sql = "UPDATE `".db_pref."shop_i` SET `SKIN`='$skin' WHERE ID=$id";
+    $sql = "UPDATE `agcms_shop_i` SET `SKIN`='$skin' WHERE ID=$id";
     $db->query($sql);
 }
 if (isset($_POST['image'])){
     /*Удаление изображения*/
     $id = $_POST['id'];
     $image= $_POST['image'];
-    $sql = "SELECT * FROM `".db_pref."shop_i` WHERE ID=$id";
+    $sql = "SELECT * FROM `agcms_shop_i` WHERE ID=$id";
     $query = $db->query($sql);
     $row = $db->fetch_array($query);
     $str = $row["IMAGES"];
@@ -106,7 +106,7 @@ if (isset($_POST['image'])){
             }
         }
         $str = implode(',',$images_);
-        $sql = "UPDATE `".db_pref."shop_i` SET `IMAGES`='$str' WHERE ID=$id";
+        $sql = "UPDATE `agcms_shop_i` SET `IMAGES`='$str' WHERE ID=$id";
         $db->query($sql);
 
         $file = $_SERVER['DOCUMENT_ROOT'].'/'.UPLOAD_IMAGES_DIR.'shop/'.$image;
@@ -119,7 +119,7 @@ if (isset($_POST['file'])){
     /*Удаление файла*/
     $id = $_POST['id'];
     $file= $_POST['file'];
-    $sql = "SELECT * FROM `".db_pref."shop_i` WHERE ID=$id";
+    $sql = "SELECT * FROM `agcms_shop_i` WHERE ID=$id";
     $query = $db->query($sql);
     $row = $db->fetch_array($query);
     $str = $row["FILES"];
@@ -131,7 +131,7 @@ if (isset($_POST['file'])){
             }
         }
         $str = serialize($files_);
-        $sql = "UPDATE `".db_pref."shop_i` SET `FILES`='$str' WHERE ID=$id";
+        $sql = "UPDATE `agcms_shop_i` SET `FILES`='$str' WHERE ID=$id";
         $db->query($sql);
 
         $file = $_SERVER['DOCUMENT_ROOT'].'/'.UPLOAD_FILES_DIR.'shop/'.$file;

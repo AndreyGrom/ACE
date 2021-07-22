@@ -21,7 +21,7 @@ class AdminCommentsController extends AdminController {
     }
 
     public function ShowMenu(){
-        $sql = "SELECT DISTINCT `CONTROLLER` FROM `".db_pref."comments`";
+        $sql = "SELECT DISTINCT `CONTROLLER` FROM `agcms_comments`";
         $query = $this->db->query($sql);
         if ($this->db->num_rows($query) > 0){
             for ($i=0; $i < $this->db->num_rows($query); $i++) {
@@ -54,7 +54,7 @@ class AdminCommentsController extends AdminController {
         if ($filer){
             $where = "WHERE `CONTROLLER`='$filer'";
         }
-        $sql = "SELECT *  FROM `".db_pref."comments` $where";
+        $sql = "SELECT *  FROM `agcms_comments` $where";
         $query = $this->db->query($sql);
         $total = $this->db->num_rows($query);
         $this->num_pages = ceil($total / $this->per_page);
@@ -74,7 +74,7 @@ class AdminCommentsController extends AdminController {
             $where = "WHERE `CONTROLLER`='$filer'";
             $url = "&filter=$filer";
         }
-        $sql = "SELECT *  FROM `".db_pref."comments` $where ORDER BY `DATE_PUBL` DESC";
+        $sql = "SELECT *  FROM `agcms_comments` $where ORDER BY `DATE_PUBL` DESC";
 
         $params = array(
             'sql' => $sql,
@@ -103,7 +103,7 @@ class AdminCommentsController extends AdminController {
             $where = "WHERE `CONTROLLER`='$filer'";
             $url = "&filter=$filer";
         }
-        $sql = "SELECT *  FROM `".db_pref."comments` $where ORDER BY `DATE_PUBL` DESC";
+        $sql = "SELECT *  FROM `agcms_comments` $where ORDER BY `DATE_PUBL` DESC";
 
         $params = array(
             'sql' => $sql,
@@ -147,7 +147,7 @@ class AdminCommentsController extends AdminController {
             $name = $_POST['name'];
             $email = $_POST['email'];
             $comment = $this->db->input($_POST['comment']);
-            $sql = "UPDATE `".db_pref."comments` SET
+            $sql = "UPDATE `agcms_comments` SET
     `DATE_PUBL` = '$date',
     `USER_NAME` = '$name',
     `USER_EMAIL` = '$email',
@@ -158,19 +158,19 @@ class AdminCommentsController extends AdminController {
         }
         if (isset($_GET['status'])){
             $status = $_GET['status'];
-            $sql = "UPDATE `".db_pref."comments` SET `STATUS` = '$status' WHERE `ID` = $this->id";
+            $sql = "UPDATE `agcms_comments` SET `STATUS` = '$status' WHERE `ID` = $this->id";
             $query = $this->db->query($sql);
             $this->Head("?c=comments");
         }
 
         if ($this->act == 'del'){
-            $sql = "DELETE FROM `".db_pref."comments` WHERE `ID` = $this->id";
+            $sql = "DELETE FROM `agcms_comments` WHERE `ID` = $this->id";
             $query = $this->db->query($sql);
             $this->Head("?c=comments");
         }
 
         if (isset($this->id)){
-            $sql = "SELECT * FROM `".db_pref."comments` WHERE `ID` = $this->id";
+            $sql = "SELECT * FROM `agcms_comments` WHERE `ID` = $this->id";
             $query = $this->db->query($sql);
             $row = $this->db->fetch_array($query);
             $row["DATE_PUBL"] = $this->DateFormat($row["DATE_PUBL"]);

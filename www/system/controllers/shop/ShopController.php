@@ -33,7 +33,7 @@ class ShopController extends Controller {
         }
         elseif ($this->query && !isset($this->get['page'])){ // если есть алиас
             $this->alias = end($this->query);
-            $sql = "SELECT * FROM `".db_pref."shop_c` WHERE `ALIAS` = '$this->alias' AND `PUBLIC`=1 LIMIT 1";
+            $sql = "SELECT * FROM `agcms_shop_c` WHERE `ALIAS` = '$this->alias' AND `PUBLIC`=1 LIMIT 1";
             $query = $this->db->query($sql);
             if ($this->db->num_rows($query) > 0){ // Если алиас принадлежит категории
                 $row = $this->db->fetch_array($query);
@@ -62,7 +62,7 @@ class ShopController extends Controller {
     }
 
     public function ShowCategories(){
-        $sql = "SELECT * FROM `".db_pref."shop_c` WHERE `PARENT` = '$this->cid' AND `PUBLIC`=1"; // получаем потомков
+        $sql = "SELECT * FROM `agcms_shop_c` WHERE `PARENT` = '$this->cid' AND `PUBLIC`=1"; // получаем потомков
         $query = $this->db->query($sql);
         if ($this->db->num_rows($query) > 0){ // Если в категории есть подкатегории, то выводим их
             for ($i=0; $i < $this->db->num_rows($query); $i++) {
@@ -91,19 +91,19 @@ class ShopController extends Controller {
         if (isset($this->get['tag'])){
             $tag = urldecode($this->query[0]);
             $this->c_name = $tag;
-            $sql = "SELECT *, @id:=ID, (SELECT COUNT(*) FROM `".db_pref."comments` WHERE `CONTROLLER` = 'shop' AND `MATERIAL_ID` = @id) AS COMMENTS_COUNT FROM `".db_pref."shop_i`  WHERE `TAGS` LIKE '%,$tag,%' AND `PUBLIC`=1 ORDER BY `DATE_PUBL` $sort";
+            $sql = "SELECT *, @id:=ID, (SELECT COUNT(*) FROM `agcms_comments` WHERE `CONTROLLER` = 'shop' AND `MATERIAL_ID` = @id) AS COMMENTS_COUNT FROM `agcms_shop_i`  WHERE `TAGS` LIKE '%,$tag,%' AND `PUBLIC`=1 ORDER BY `DATE_PUBL` $sort";
         }elseif (isset($this->get['manufacturer'])){
             $manufacturer =$this->query[0];
-            $sql = "SELECT * FROM `".db_pref."manufacturer` WHERE MANUFACTURER_ID=$manufacturer LIMIT 1";
+            $sql = "SELECT * FROM `agcms_manufacturer` WHERE MANUFACTURER_ID=$manufacturer LIMIT 1";
             $query = $this->db->query($sql);
             $row = $this->db->fetch_array($query);
             $this->c_name = $row['MANUFACTURER_NAME'];;
-            $sql = "SELECT *, @id:=ID, (SELECT COUNT(*) FROM `".db_pref."comments` WHERE `CONTROLLER` = 'shop' AND `MATERIAL_ID` = @id) AS COMMENTS_COUNT FROM `".db_pref."shop_i`  WHERE `MANUFACTURER_ID` = '$manufacturer' AND `PUBLIC`=1 ORDER BY `DATE_PUBL` $sort";
+            $sql = "SELECT *, @id:=ID, (SELECT COUNT(*) FROM `agcms_comments` WHERE `CONTROLLER` = 'shop' AND `MATERIAL_ID` = @id) AS COMMENTS_COUNT FROM `agcms_shop_i`  WHERE `MANUFACTURER_ID` = '$manufacturer' AND `PUBLIC`=1 ORDER BY `DATE_PUBL` $sort";
         }
         elseif($this->cid==0){
-            $sql = "SELECT *, @id:=ID, (SELECT COUNT(*) FROM `".db_pref."comments` WHERE `CONTROLLER` = 'shop' AND `MATERIAL_ID` = @id) AS COMMENTS_COUNT FROM `".db_pref."shop_i`  WHERE `PUBLIC`=1 ORDER BY `DATE_PUBL` $sort";
+            $sql = "SELECT *, @id:=ID, (SELECT COUNT(*) FROM `agcms_comments` WHERE `CONTROLLER` = 'shop' AND `MATERIAL_ID` = @id) AS COMMENTS_COUNT FROM `agcms_shop_i`  WHERE `PUBLIC`=1 ORDER BY `DATE_PUBL` $sort";
         } else {
-            $sql = "SELECT *, @id:=ID, (SELECT COUNT(*) FROM `".db_pref."comments` WHERE `CONTROLLER` = 'shop' AND `MATERIAL_ID` = @id) AS COMMENTS_COUNT FROM `".db_pref."shop_i`  WHERE `PARENT` LIKE '%,$this->cid,%' AND `PUBLIC`=1 ORDER BY `DATE_PUBL` $sort";
+            $sql = "SELECT *, @id:=ID, (SELECT COUNT(*) FROM `agcms_comments` WHERE `CONTROLLER` = 'shop' AND `MATERIAL_ID` = @id) AS COMMENTS_COUNT FROM `agcms_shop_i`  WHERE `PARENT` LIKE '%,$this->cid,%' AND `PUBLIC`=1 ORDER BY `DATE_PUBL` $sort";
         }
 
         $params = array(
@@ -167,7 +167,7 @@ class ShopController extends Controller {
         return $result;
     }
     function GetOptionsList(){
-        $sql = "SELECT * FROM `".db_pref."options` ORDER BY `POSITION`,`OPTION_ID`";
+        $sql = "SELECT * FROM `agcms_options` ORDER BY `POSITION`,`OPTION_ID`";
         $query = $this->db->query($sql);
         for ($i=0; $i < $this->db->num_rows($query); $i++) {
             $row = $this->db->fetch_array($query);
@@ -176,7 +176,7 @@ class ShopController extends Controller {
         return $options;
     }
     function GetOptionParams($id){
-        $sql = "SELECT * FROM `".db_pref."options_parameter` WHERE OPTION_ID = $id";
+        $sql = "SELECT * FROM `agcms_options_parameter` WHERE OPTION_ID = $id";
         $query = $this->db->query($sql);
         for ($i=0; $i < $this->db->num_rows($query); $i++) {
             $row = $this->db->fetch_array($query);
@@ -199,7 +199,7 @@ class ShopController extends Controller {
     }
     public function GetProductOptions($id){
         $result = array();
-        $sql = "SELECT * FROM `".db_pref."shop_i_options` WHERE `PRODUCT_ID`=$id";
+        $sql = "SELECT * FROM `agcms_shop_i_options` WHERE `PRODUCT_ID`=$id";
         $query = $this->db->query($sql);
         if ($this->db->num_rows($query)>0){
             for ($i=0; $i < $this->db->num_rows($query); $i++) {
@@ -252,7 +252,7 @@ class ShopController extends Controller {
 
     public function GetProductsLinks($links){
         if ($links!==''){
-            $sql = "SELECT *, @id:=ID, (SELECT COUNT(*) FROM `".db_pref."comments` WHERE `CONTROLLER` = 'shop' AND `MATERIAL_ID` = @id) AS COMMENTS_COUNT FROM `".db_pref."shop_i`  WHERE `PUBLIC`=1 AND `ID` IN ($links) ORDER BY `DATE_PUBL`";
+            $sql = "SELECT *, @id:=ID, (SELECT COUNT(*) FROM `agcms_comments` WHERE `CONTROLLER` = 'shop' AND `MATERIAL_ID` = @id) AS COMMENTS_COUNT FROM `agcms_shop_i`  WHERE `PUBLIC`=1 AND `ID` IN ($links) ORDER BY `DATE_PUBL`";
         }
 
     }
@@ -260,9 +260,9 @@ class ShopController extends Controller {
     public function ShowItem($id=0){
         $other_items = array();
         if ($id > 0){
-            $sql = "SELECT *, @id:=ID, (SELECT COUNT(*) FROM `".db_pref."comments` WHERE `CONTROLLER` = 'shop' AND `MATERIAL_ID` = @id) AS COMMENTS_COUNT FROM `".db_pref."shop_i` i LEFT JOIN `".db_pref."manufacturer` m ON m.MANUFACTURER_ID=i.MANUFACTURER_ID WHERE i.ID = '$id' AND i.PUBLIC=1 LIMIT 1";
+            $sql = "SELECT *, @id:=ID, (SELECT COUNT(*) FROM `agcms_comments` WHERE `CONTROLLER` = 'shop' AND `MATERIAL_ID` = @id) AS COMMENTS_COUNT FROM `agcms_shop_i` i LEFT JOIN `agcms_manufacturer` m ON m.MANUFACTURER_ID=i.MANUFACTURER_ID WHERE i.ID = '$id' AND i.PUBLIC=1 LIMIT 1";
         } else {
-            $sql = "SELECT *, @id:=ID, (SELECT COUNT(*) FROM `".db_pref."comments` WHERE `CONTROLLER` = 'shop' AND `MATERIAL_ID` = @id) AS COMMENTS_COUNT FROM `".db_pref."shop_i` i LEFT JOIN `".db_pref."manufacturer` m ON m.MANUFACTURER_ID=i.MANUFACTURER_ID WHERE i.ALIAS = '$this->alias' AND i.PUBLIC=1 LIMIT 1";
+            $sql = "SELECT *, @id:=ID, (SELECT COUNT(*) FROM `agcms_comments` WHERE `CONTROLLER` = 'shop' AND `MATERIAL_ID` = @id) AS COMMENTS_COUNT FROM `agcms_shop_i` i LEFT JOIN `agcms_manufacturer` m ON m.MANUFACTURER_ID=i.MANUFACTURER_ID WHERE i.ALIAS = '$this->alias' AND i.PUBLIC=1 LIMIT 1";
         }
 
         $query = $this->db->query($sql);
@@ -294,7 +294,7 @@ class ShopController extends Controller {
             $parents = array_filter($parents);
             sort($parents);
             $str = implode(",",$parents);
-            $sql = "SELECT * FROM `".db_pref."shop_c`  WHERE `ID` IN ($str) AND `PUBLIC`=1";
+            $sql = "SELECT * FROM `agcms_shop_c`  WHERE `ID` IN ($str) AND `PUBLIC`=1";
             $query = $this->db->query($sql);
             $categories = $this->db->fetch_all($query);
             /*///////////////////*/
@@ -305,7 +305,7 @@ class ShopController extends Controller {
             $str = array_filter($str);
             sort($str);
             $str = implode(",",$str);
-            $sql = "SELECT * FROM `".db_pref."shop_i`  WHERE `ID` IN ($str) AND `PUBLIC`=1";
+            $sql = "SELECT * FROM `agcms_shop_i`  WHERE `ID` IN ($str) AND `PUBLIC`=1";
             $query = $this->db->query($sql);
             $links = $this->db->fetch_all($query);*/
             /*/////////////////////////////*/
@@ -321,7 +321,7 @@ class ShopController extends Controller {
                         $sql.= "`TAGS` LIKE '%$t%'";
                     }
                 }
-                $sql = "SELECT * FROM `".db_pref."shop_i` WHERE `ID` <> ".$item["ID"]." AND ( ".$sql." ) ORDER BY `DATE_EDIT` DESC LIMIT 10";
+                $sql = "SELECT * FROM `agcms_shop_i` WHERE `ID` <> ".$item["ID"]." AND ( ".$sql." ) ORDER BY `DATE_EDIT` DESC LIMIT 10";
                 $query = $this->db->query($sql);
                 for ($i=0; $i < $this->db->num_rows($query); $i++) {
                     $row = $this->db->fetch_array($query);
@@ -338,7 +338,7 @@ class ShopController extends Controller {
                         $sql.= "`PARENT` LIKE '%$t%'";
                     }
                 }
-                $sql = "SELECT * FROM `".db_pref."shop_i` WHERE `ID` <> ".$item["ID"]." AND ( ".$sql." ) ORDER BY `DATE_EDIT` DESC LIMIT 10";
+                $sql = "SELECT * FROM `agcms_shop_i` WHERE `ID` <> ".$item["ID"]." AND ( ".$sql." ) ORDER BY `DATE_EDIT` DESC LIMIT 10";
                 $query = $this->db->query($sql);
                 for ($i=0; $i < $this->db->num_rows($query); $i++) {
                     $row = $this->db->fetch_array($query);
@@ -457,7 +457,7 @@ class ShopController extends Controller {
     }
     function GetDeliverys(){
         $result = array();
-        $sql = "SELECT * FROM `".db_pref."delivery`";
+        $sql = "SELECT * FROM `agcms_delivery`";
         $query = $this->db->query($sql);
         for ($i=0; $i < $this->db->num_rows($query); $i++) {
             $row = $this->db->fetch_array($query);
@@ -466,7 +466,7 @@ class ShopController extends Controller {
         return $result;
     }
     function GetDelivery($id){
-        $sql = "SELECT * FROM `".db_pref."delivery` WHERE `DELIVERY_ID` = $id LIMIT 1";
+        $sql = "SELECT * FROM `agcms_delivery` WHERE `DELIVERY_ID` = $id LIMIT 1";
         $query = $this->db->query($sql);
         $result = $this->db->fetch_array($query);
         return $result;
@@ -476,7 +476,7 @@ class ShopController extends Controller {
         if (!$this->login){
             $this->head('/register/redirect=shop-order');
         }
-        $sql = "SELECT * FROM `".db_pref."regions` WHERE `COUNTRY_ID`=3159 ORDER BY `REGION_NAME`";
+        $sql = "SELECT * FROM `agcms_regions` WHERE `COUNTRY_ID`=3159 ORDER BY `REGION_NAME`";
         $query = $this->db->query($sql);
         if ($this->db->num_rows($query) > 0){
             for ($i=0; $i < $this->db->num_rows($query); $i++) {

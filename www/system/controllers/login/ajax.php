@@ -5,7 +5,7 @@ if (isset($_POST['email'])){
     $email = $_POST['email'];
     $password = $_POST['password'];
     $db = Database::getInstance();
-    $sql = "SELECT * FROM `".db_pref."users` WHERE `EMAIL`='$email' AND `PASSWORD`='$password' LIMIT 1";
+    $sql = "SELECT * FROM `agcms_users` WHERE `EMAIL`='$email' AND `PASSWORD`='$password' LIMIT 1";
     $query = $db->query($sql);
     $result = '';
     if ($db->num_rows($query) > 0){

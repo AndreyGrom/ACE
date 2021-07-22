@@ -3,7 +3,7 @@
 class ModelPages extends Model {
     public function __construct() {
         parent::__construct();
-        $this->table_name = db_pref.'pages';
+        $this->table_name = 'agcms_pages';
         $this->table_name_content = 'pages_content';
 
     }

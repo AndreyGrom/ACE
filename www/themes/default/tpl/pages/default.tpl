@@ -1,20 +1,16 @@
 {include file="../common/header.tpl"}
 
-<section id="content">
-    <div class="white-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>{$page_title}</h1>
-                </div>
-                <div class="clearfix"></div>
-                <br/>
-                <div class="col-md-12 page-content">
-                    {$page_content}
-                </div>
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{$page_title}</h1>
 
-                </div>
+                {$page_content}
             </div>
         </div>
-    </section>
+    </div>
+</main>
+
+
 {include file="../common/footer.tpl"}

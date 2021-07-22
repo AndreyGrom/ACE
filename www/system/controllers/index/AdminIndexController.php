@@ -18,7 +18,7 @@ class AdminIndexController extends AdminController {
     }
 
     public function getPages(){
-        $sql = "SELECT * FROM  `".db_pref."pages` ORDER BY `DATE_EDIT` DESC";
+        $sql = "SELECT * FROM  `agcms_pages` ORDER BY `DATE_EDIT` DESC";
         $query = $this->db->query($sql);
         $this->pages_count = $this->db->num_rows($query);
         for ($i=0; $i < $this->pages_last_count-1; $i++) {
@@ -30,7 +30,7 @@ class AdminIndexController extends AdminController {
         }
     }
     public function getCatalog(){
-        $sql = "SELECT * FROM  `".db_pref."catalog_i` ORDER BY `DATE_EDIT` DESC";
+        $sql = "SELECT * FROM  `agcms_catalog_i` ORDER BY `DATE_EDIT` DESC";
         $query = $this->db->query($sql);
         $this->catalog_count = $this->db->num_rows($query);
         for ($i=0; $i < $this->catalog_last_count-1; $i++) {
@@ -42,7 +42,7 @@ class AdminIndexController extends AdminController {
         }
     }
     public function getComments(){
-        $sql = "SELECT * FROM  `".db_pref."comments` ORDER BY `DATE_PUBL` DESC";
+        $sql = "SELECT * FROM  `agcms_comments` ORDER BY `DATE_PUBL` DESC";
         $query = $this->db->query($sql);
         $this->comments_count = $this->db->num_rows($query);
         for ($i=0; $i < $this->comments_last_count-1; $i++) {
@@ -53,7 +53,7 @@ class AdminIndexController extends AdminController {
         }
     }
     public function getCodes(){
-        $sql = "SELECT * FROM  `".db_pref."codes` ORDER BY `DATE_EDIT` DESC";
+        $sql = "SELECT * FROM  `agcms_codes` ORDER BY `DATE_EDIT` DESC";
         $query = $this->db->query($sql);
         $this->codes_count = $this->db->num_rows($query);
         for ($i=0; $i < $this->codes_last_count-1; $i++) {

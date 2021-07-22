@@ -88,7 +88,7 @@ class Controller {
         $this->smarty->template_dir = $this->templates_dir . $path;
     }
     public function getCats($parent = false){
-        $sql = "SELECT * FROM `".db_pref."catalog_c` ORDER BY `ID`";
+        $sql = "SELECT * FROM `agcms_catalog_c` ORDER BY `ID`";
         $categories = $this->db->select($sql, false);
         return $categories;
     }

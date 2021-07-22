@@ -51,7 +51,7 @@ class AdminShopController extends AdminController {
         $meta_keywords    = $this->post['meta_keywords'];
         $delete_image     = $this->post['delete_image'];
         $old_image        = $this->post['old_image'];
-        $sql = "SELECT * FROM `".db_pref."shop_c` WHERE `ALIAS`='$alias'";
+        $sql = "SELECT * FROM `agcms_shop_c` WHERE `ALIAS`='$alias'";
         if ($this->act!=='new_c'){
             $sql .= " AND ID <> $this->cid";
         }
@@ -61,7 +61,7 @@ class AdminShopController extends AdminController {
             $image = Func::getInstance()->UploadFile($_FILES["image"]['name'],$_FILES["image"]['tmp_name'], $upload_path);
             if ($this->act == 'new_c'){
                 $sql = "
-            INSERT INTO `".db_pref."shop_c` (
+            INSERT INTO `agcms_shop_c` (
             `PARENT`,`TITLE`, `DESC`, `DESC2`, `ALIAS`, `META_DESC`,`META_KEYWORDS`, `PUBLIC`,`TEMPLATE`, `POSITION`, `IMAGE`)
             VALUES
             ('$parent','$title','$desc','$desc2', '$alias','$meta_desc','$meta_keywords','$publ','$template','99999','$image')";
@@ -81,7 +81,7 @@ class AdminShopController extends AdminController {
                         unlink($old_image);
                     }
                 }
-                $sql = "UPDATE `".db_pref."shop_c` SET
+                $sql = "UPDATE `agcms_shop_c` SET
                 `PARENT` = '$parent',
                 `TITLE` = '$title',
                 `DESC` = '$desc',
@@ -163,7 +163,7 @@ class AdminShopController extends AdminController {
             }
         }
         $date = time();
-        $sql = "SELECT * FROM `".db_pref."shop_i` WHERE `ALIAS`='$alias'";
+        $sql = "SELECT * FROM `agcms_shop_i` WHERE `ALIAS`='$alias'";
         if (isset($this->id)){
             $sql .= " AND ID <> $this->id";
         }
@@ -171,7 +171,7 @@ class AdminShopController extends AdminController {
         if ($this->db->num_rows($query) == 0){ // если такого алиаса нет
             if ($this->act == 'new'){
                 $sql = "
-            INSERT INTO `".db_pref."shop_i` (
+            INSERT INTO `agcms_shop_i` (
             `PARENT`,`TITLE`, `ALIAS`,`SHORT_CONTENT`, `CONTENT`,`META_TITLE`,`META_DESC`,`META_KEYWORDS`,`COMMENTS`,`PUBLIC`,`TEMPLATE`,`DATE_PUBL`,`DATE_EDIT`,`TAGS`,`ARTICLE`,`PRICE_OPT`,`PRICE`,`PRICE_NEW`,`QUANTITY`,
             `OTHER1`,`OTHER2`,`OTHER3`,`OTHER4`,`OTHER5`,`OTHER6`,`OTHER7`,`OTHER8`,`OTHER9`,`OTHER10`,`FILE1`,`FILE2`,`FILE3`,`FILE1_NAME`,`FILE2_NAME`,`FILE3_NAME`,`MANUFACTURER_ID`,`MODEL`,`COUNTRY`,`LINKS`,`VIDEO`)
             VALUES
@@ -182,7 +182,7 @@ class AdminShopController extends AdminController {
 
             }else{
                 $date_edit = $this->post['DATE_EDIT'];
-                $sql = "UPDATE `".db_pref."shop_i` SET
+                $sql = "UPDATE `agcms_shop_i` SET
         `PARENT` = '$parent',
         `TITLE` = '$title',
         `ALIAS` = '$alias',
@@ -228,13 +228,13 @@ class AdminShopController extends AdminController {
 
 
             $product_id = $this->id;
-            $sql = "DELETE FROM `".db_pref."shop_i_options` WHERE `PRODUCT_ID`=$product_id";
+            $sql = "DELETE FROM `agcms_shop_i_options` WHERE `PRODUCT_ID`=$product_id";
             $query = $this->db->query($sql);
             $options = $this->post['options_json'];
             $options = json_decode($options);
             if (count($options) > 0){
                 $sql_arr = array();
-                $sql = "INSERT INTO `".db_pref."shop_i_options` (`PRODUCT_ID`, `OPTION_ID`, `PARAMETER_ID`, `PARAMETER_METHOD`, `PARAMETER_PRICE`, `PARAMETER_ARTICLE`) VALUES ";
+                $sql = "INSERT INTO `agcms_shop_i_options` (`PRODUCT_ID`, `OPTION_ID`, `PARAMETER_ID`, `PARAMETER_METHOD`, `PARAMETER_PRICE`, `PARAMETER_ARTICLE`) VALUES ";
                 foreach($options as $o){
                     $option_id = $o->option_id;
                     $parameter_id = $o->id;
@@ -255,7 +255,7 @@ class AdminShopController extends AdminController {
     }
 
     public function getCategories($parent = false){
-        $sql = "SELECT * FROM `".db_pref."shop_c` ORDER BY `ID`";
+        $sql = "SELECT * FROM `agcms_shop_c` ORDER BY `ID`";
         $query = $this->db->query($sql);
         $categories = $this->db->fetch_all($query);
         return $categories;
@@ -271,7 +271,7 @@ class AdminShopController extends AdminController {
             $where = "WHERE `PARENT` LIKE '%,$parent,%'";
         }
 
-        $sql = "SELECT * FROM `".db_pref."shop_i` $where ORDER BY $sort $limit";
+        $sql = "SELECT * FROM `agcms_shop_i` $where ORDER BY $sort $limit";
         $query = $this->db->query($sql);
         for ($i=0; $i < $this->db->num_rows($query); $i++) {
             $row = $this->db->fetch_array($query);
@@ -283,7 +283,7 @@ class AdminShopController extends AdminController {
     }
     public function getCategory($cid){
         $row = array();
-        $sql = "SELECT * FROM `".db_pref."shop_c` WHERE `ID`=$cid LIMIT 1";
+        $sql = "SELECT * FROM `agcms_shop_c` WHERE `ID`=$cid LIMIT 1";
         $query = $this->db->query($sql);
         if ($this->db->num_rows($query)>0){
             $row = $this->db->fetch_array($query);
@@ -296,7 +296,7 @@ class AdminShopController extends AdminController {
         return $row;
     }
     public function getItem($id){
-        $sql = "SELECT i.*, c.ID AS CID, c.TITLE AS CAT_NAME, c.ALIAS AS CAT_ALIAS FROM `".db_pref."shop_i` i LEFT JOIN `".db_pref."shop_c` c ON i.PARENT=c.ID WHERE i.`ID`=$id LIMIT 1";
+        $sql = "SELECT i.*, c.ID AS CID, c.TITLE AS CAT_NAME, c.ALIAS AS CAT_ALIAS FROM `agcms_shop_i` i LEFT JOIN `agcms_shop_c` c ON i.PARENT=c.ID WHERE i.`ID`=$id LIMIT 1";
         $query = $this->db->query($sql);
         $row = $this->db->fetch_array($query);
         $row["DATE_PUBL"] = $this->DateFormat($row["DATE_PUBL"]);
@@ -376,7 +376,7 @@ class AdminShopController extends AdminController {
             $where = implode(' AND ',$where_arr);
             $where = 'WHERE '.$where;
         }
-        $sql = "SELECT * FROM `".db_pref."shop_i` $where";
+        $sql = "SELECT * FROM `agcms_shop_i` $where";
         $params = array(
             'sql' => $sql,
             'per_page' => 20,
@@ -428,10 +428,10 @@ class AdminShopController extends AdminController {
         $this->content = $this->SetTemplate('item.tpl');
     }
     public function DeleteCategory($id){
-        $sql = "SELECT * FROM `".db_pref."shop_i` WHERE `PARENT` LIKE '%,$id,%'";
+        $sql = "SELECT * FROM `agcms_shop_i` WHERE `PARENT` LIKE '%,$id,%'";
         $query = $this->db->query($sql);
         if ($this->db->num_rows($query) == 0){
-            $sql = "DELETE FROM `".db_pref."shop_c` WHERE `ID`=$id";
+            $sql = "DELETE FROM `agcms_shop_c` WHERE `ID`=$id";
             $query = $this->db->query($sql);
             $this->Head('?c=shop');
         } else {
@@ -440,7 +440,7 @@ class AdminShopController extends AdminController {
         }
     }
     public function DeleteItem($id){
-        $sql = "SELECT * FROM `".db_pref."shop_i` WHERE `ID`=$id LIMIT 1";
+        $sql = "SELECT * FROM `agcms_shop_i` WHERE `ID`=$id LIMIT 1";
         $query = $this->db->query($sql);
         $row = $this->db->fetch_array($query);
         if ($row['IMAGES']!==''){
@@ -451,7 +451,7 @@ class AdminShopController extends AdminController {
                 }
             }
         }
-        $sql = "DELETE FROM `".db_pref."shop_i` WHERE `ID`=$id";
+        $sql = "DELETE FROM `agcms_shop_i` WHERE `ID`=$id";
         $query = $this->db->query($sql);
     }
     public function ShowCategory($row){
@@ -489,7 +489,7 @@ class AdminShopController extends AdminController {
     }
     public function GetProductOptions($id){
         $result = array();
-        $sql = "SELECT * FROM `".db_pref."shop_i_options` WHERE `PRODUCT_ID`=$id";
+        $sql = "SELECT * FROM `agcms_shop_i_options` WHERE `PRODUCT_ID`=$id";
         $query = $this->db->query($sql);
         $result = $this->db->fetch_all($query);
 /*        if ($this->db->num_rows($query)>0){
@@ -567,7 +567,7 @@ class AdminShopController extends AdminController {
         $MANUFACTURER_META_DESC = $this->post['MANUFACTURER_META_DESC'];
         $MANUFACTURER_META_KEYWORDS = $this->post['MANUFACTURER_META_KEYWORDS'];
         if (isset($this->id)){
-            $sql = "UPDATE `".db_pref."manufacturer` SET
+            $sql = "UPDATE `agcms_manufacturer` SET
                 `MANUFACTURER_NAME` = '$MANUFACTURER_NAME',
                 `MANUFACTURER_DESC` = '$MANUFACTURER_DESC',
                 `MANUFACTURER_META_TITLE` = '$MANUFACTURER_META_TITLE',
@@ -577,7 +577,7 @@ class AdminShopController extends AdminController {
             $query = $this->db->query($sql);
 
         } else{
-            $sql = "INSERT INTO `".db_pref."manufacturer` (
+            $sql = "INSERT INTO `agcms_manufacturer` (
             `MANUFACTURER_NAME`,`MANUFACTURER_DESC`, `MANUFACTURER_META_TITLE`, `MANUFACTURER_META_DESC`, `MANUFACTURER_META_KEYWORDS`)
             VALUES
             ('$MANUFACTURER_NAME','$MANUFACTURER_DESC','$MANUFACTURER_META_TITLE','$MANUFACTURER_META_DESC', '$MANUFACTURER_META_KEYWORDS')";
@@ -590,7 +590,7 @@ class AdminShopController extends AdminController {
 
     function GetManufacturer(){
         $id = $this->id;
-        $sql = "SELECT * FROM `".db_pref."manufacturer` WHERE MANUFACTURER_ID = $id LIMIT 1";
+        $sql = "SELECT * FROM `agcms_manufacturer` WHERE MANUFACTURER_ID = $id LIMIT 1";
         $query = $this->db->query($sql);
         $manufacturer = $this->db->fetch_array($query);
         return $manufacturer;
@@ -598,7 +598,7 @@ class AdminShopController extends AdminController {
 
     function GetManufacturers(){
         $id = $this->id;
-        $sql = "SELECT * FROM `".db_pref."manufacturer`";
+        $sql = "SELECT * FROM `agcms_manufacturer`";
         $query = $this->db->query($sql);
         $manufacturers = $this->db->fetch_all($query);
 /*        for ($i=0; $i < $this->db->num_rows($query); $i++) {
@@ -622,20 +622,20 @@ class AdminShopController extends AdminController {
     }
     public function DeleteManufacturer(){
         $id = $this->id;
-        $sql = "DELETE FROM `".db_pref."manufacturer` WHERE MANUFACTURER_ID=$id";
+        $sql = "DELETE FROM `agcms_manufacturer` WHERE MANUFACTURER_ID=$id";
         $query = $this->db->query($sql);
         $this->Head("?c=shop&act=manufacturer");
     }
     public function SaveOption(){
         $OPTION_NAME = $this->post['OPTION_NAME'];
         if (isset($this->id)){
-            $sql = "UPDATE `".db_pref."options` SET
+            $sql = "UPDATE `agcms_options` SET
                 `OPTION_NAME` = '$OPTION_NAME'
                  WHERE `OPTION_ID` = $this->id";
             $query = $this->db->query($sql);
 
         } else{
-            $sql = "INSERT INTO `".db_pref."options` (
+            $sql = "INSERT INTO `agcms_options` (
             `OPTION_NAME`)
             VALUES
             ('$OPTION_NAME')";
@@ -645,7 +645,7 @@ class AdminShopController extends AdminController {
         if (isset($this->post["OPTION_PARAMETER"]) && $this->post["OPTION_PARAMETER"]!==''){
             $p = $this->post["OPTION_PARAMETER"];
             $id = $this->id;
-            $sql = "INSERT INTO `".db_pref."options_parameter` (
+            $sql = "INSERT INTO `agcms_options_parameter` (
             `PARAMETER`, `OPTION_ID`)
             VALUES
             ('$p','$id')";
@@ -655,7 +655,7 @@ class AdminShopController extends AdminController {
     }
     function GetOptions(){
         $id = $this->id;
-        $sql = "SELECT * FROM `".db_pref."options` ORDER BY `POSITION`,`OPTION_ID`";
+        $sql = "SELECT * FROM `agcms_options` ORDER BY `POSITION`,`OPTION_ID`";
         $query = $this->db->query($sql);
         $options = $this->db->fetch_all($query);
 /*        for ($i=0; $i < $this->db->num_rows($query); $i++) {
@@ -672,13 +672,13 @@ class AdminShopController extends AdminController {
     }
     function GetOption(){
         $id = $this->id;
-        $sql = "SELECT * FROM `".db_pref."options` WHERE OPTION_ID = $id LIMIT 1";
+        $sql = "SELECT * FROM `agcms_options` WHERE OPTION_ID = $id LIMIT 1";
         $query = $this->db->query($sql);
         $option = $this->db->fetch_array($query);
         return $option;
     }
     function GetOptionParams($id){
-        $sql = "SELECT * FROM `".db_pref."options_parameter` WHERE OPTION_ID = $id";
+        $sql = "SELECT * FROM `agcms_options_parameter` WHERE OPTION_ID = $id";
         $query = $this->db->query($sql);
         $params = $this->db->fetch_all($query);
 /*        for ($i=0; $i < $this->db->num_rows($query); $i++) {
@@ -698,9 +698,9 @@ class AdminShopController extends AdminController {
     }
     public function DeleteOption(){
         $id = $this->id;
-        $sql = "DELETE FROM `".db_pref."options` WHERE OPTION_ID=$id";
+        $sql = "DELETE FROM `agcms_options` WHERE OPTION_ID=$id";
         $query = $this->db->query($sql);
-        $sql = "DELETE FROM `".db_pref."options_parameter` WHERE OPTION_ID=$id";
+        $sql = "DELETE FROM `agcms_options_parameter` WHERE OPTION_ID=$id";
         $query = $this->db->query($sql);
         $this->Head("?c=shop&act=options");
     }
@@ -708,14 +708,14 @@ class AdminShopController extends AdminController {
         $name = $this->post['PARAM_NAME'];
         $id = $this->post['PARAM_ID'];
         $option_id = $this->get['id'];
-        $sql = "UPDATE `".db_pref."options_parameter` SET `PARAMETER`='$name' WHERE ID = $id";
+        $sql = "UPDATE `agcms_options_parameter` SET `PARAMETER`='$name' WHERE ID = $id";
         $query = $this->db->query($sql);
         $this->Head("?c=shop&act=options&id=$option_id");
     }
     function DeleteOptionParam(){
         $param_id = $this->get['param_id'];
         $id = $this->get['id'];
-        $sql = "DELETE FROM `".db_pref."options_parameter` WHERE ID=$param_id";
+        $sql = "DELETE FROM `agcms_options_parameter` WHERE ID=$param_id";
         $query = $this->db->query($sql);
 
     }
@@ -724,7 +724,7 @@ class AdminShopController extends AdminController {
             $list = explode(';', $this->post["blocks_sort"]);
             foreach ($list as $k=>$v){
                 if ($v=='') continue;
-                $sql = "UPDATE `".db_pref."options` SET `POSITION`=$k WHERE `OPTION_ID` = $v";
+                $sql = "UPDATE `agcms_options` SET `POSITION`=$k WHERE `OPTION_ID` = $v";
                 $query = $this->db->query($sql);
             }
         }
@@ -746,7 +746,7 @@ class AdminShopController extends AdminController {
     public function ImportUpdate(){
         if (isset($_FILES)){
             $products = $this->getItems(false,0,0);
-            $sql = "UPDATE `".db_pref."shop_i` SET `QUANTITY`='0'";
+            $sql = "UPDATE `agcms_shop_i` SET `QUANTITY`='0'";
             $this->db->query($sql);
             $i = 0;
             foreach($_FILES as $f){
@@ -763,7 +763,7 @@ class AdminShopController extends AdminController {
                         if (count($product)>0){
                             /*if ($product['PRICE_OPT']!==$price1 || $product['PRICE']!==$price2 || $product['QUANTITY']!==$quantity){*/
                                 $id = $product['ID'];
-                                $sql = "UPDATE `".db_pref."shop_i` SET `PRICE_OPT` = '$price1',`PRICE` = '$price2',`QUANTITY`='$quantity' WHERE `ID`=$id";
+                                $sql = "UPDATE `agcms_shop_i` SET `PRICE_OPT` = '$price1',`PRICE` = '$price2',`QUANTITY`='$quantity' WHERE `ID`=$id";
                                 $this->db->query($sql);
                                 $i++;
                         /*}*/
@@ -780,7 +780,7 @@ class AdminShopController extends AdminController {
         $DELIVERY_DESC = $this->db->input($this->post['DELIVERY_DESC']);
         $DELIVERY_PRICE = $this->db->input($this->post['DELIVERY_PRICE']);
         if (isset($this->id)){
-            $sql = "UPDATE `".db_pref."delivery` SET
+            $sql = "UPDATE `agcms_delivery` SET
                 `DELIVERY_NAME` = '$DELIVERY_NAME',
                 `DELIVERY_DESC` = '$DELIVERY_DESC',
                 `DELIVERY_PRICE` = '$DELIVERY_PRICE'
@@ -788,7 +788,7 @@ class AdminShopController extends AdminController {
             $query = $this->db->query($sql);
 
         } else{
-            $sql = "INSERT INTO `".db_pref."delivery` (
+            $sql = "INSERT INTO `agcms_delivery` (
             `DELIVERY_NAME`,`DELIVERY_DESC`, `DELIVERY_PRICE`)
             VALUES
             ('$DELIVERY_NAME','$DELIVERY_DESC','$DELIVERY_PRICE')";
@@ -800,7 +800,7 @@ class AdminShopController extends AdminController {
 
     function GetDelivery(){
         $id = $this->id;
-        $sql = "SELECT * FROM `".db_pref."delivery` WHERE `DELIVERY_ID` = $id LIMIT 1";
+        $sql = "SELECT * FROM `agcms_delivery` WHERE `DELIVERY_ID` = $id LIMIT 1";
         $query = $this->db->query($sql);
         $result = $this->db->fetch_array($query);
         return $result;
@@ -808,7 +808,7 @@ class AdminShopController extends AdminController {
 
     function GetDeliverys(){
         $result = array();
-        $sql = "SELECT * FROM `".db_pref."delivery`";
+        $sql = "SELECT * FROM `agcms_delivery`";
         $query = $this->db->query($sql);
         $result = $this->db->fetch_all($query);
 /*        for ($i=0; $i < $this->db->num_rows($query); $i++) {
@@ -831,7 +831,7 @@ class AdminShopController extends AdminController {
     }
     function GetPays(){
         $result = array();
-        $sql = "SELECT * FROM `".db_pref."shop_pay_systems`";
+        $sql = "SELECT * FROM `agcms_shop_pay_systems`";
         $query = $this->db->query($sql);
         for ($i=0; $i < $this->db->num_rows($query); $i++) {
             $row = $this->db->fetch_array($query);
@@ -842,7 +842,7 @@ class AdminShopController extends AdminController {
                 'status' => $row['STATUS'],
             );
             $id = $row['ID'];
-            $sql = "SELECT * FROM `".db_pref."shop_pay_methods` WHERE `SYSTEM_ID`='$id' ORDER BY `POSITION`";
+            $sql = "SELECT * FROM `agcms_shop_pay_methods` WHERE `SYSTEM_ID`='$id' ORDER BY `POSITION`";
             $query2 = $this->db->query($sql);
             $system['pays'] = $this->db->fetch_all($query2);
 /*            for ($j=0; $j < $this->db->num_rows($query2); $j++) {
@@ -863,7 +863,7 @@ class AdminShopController extends AdminController {
     public function SavePays(){
         $system = $this->post['ShopPaySystem'];
         $this->config->set('ShopPaySystem',$system);
-        $sql = "UPDATE `".db_pref."shop_pay_methods` SET `STATUS`=0";
+        $sql = "UPDATE `agcms_shop_pay_methods` SET `STATUS`=0";
         $query = $this->db->query($sql);
 
         $methods = json_decode($this->post['pays_json']);
@@ -873,7 +873,7 @@ class AdminShopController extends AdminController {
             $price_sum = $v->price_sum;
             $price_ed = $v->price_ed;
             $position = $v->position;
-            $sql = "UPDATE `".db_pref."shop_pay_methods` SET `STATUS`=1, `PRICE_METHOD`='$price_method',`PRICE_SUM`='$price_sum', `PRICE_ED`='$price_ed',`POSITION`=$position WHERE `METHOD_ID` = '$method_id' AND `SYSTEM_ID`='$system'";
+            $sql = "UPDATE `agcms_shop_pay_methods` SET `STATUS`=1, `PRICE_METHOD`='$price_method',`PRICE_SUM`='$price_sum', `PRICE_ED`='$price_ed',`POSITION`=$position WHERE `METHOD_ID` = '$method_id' AND `SYSTEM_ID`='$system'";
             $query = $this->db->query($sql);
         }
         $this->Head('?c=shop&act=pays');

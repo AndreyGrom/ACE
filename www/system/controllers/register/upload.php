@@ -18,7 +18,7 @@ if (isset($_FILES)){
             $image = Func::getInstance()->generateName() . '.' . Func::getInstance()->getExt($_FILES["image"]["name"]);
            Func::getInstance()->CreatePath($upload);
             move_uploaded_file($_FILES["image"]["tmp_name"], $upload . $image);
-            $sql = "UPDATE `".db_pref."users` SET `AVATAR`='$image' WHERE ID=$id";
+            $sql = "UPDATE `agcms_users` SET `AVATAR`='$image' WHERE ID=$id";
 
             $query = $db->query($sql);
 

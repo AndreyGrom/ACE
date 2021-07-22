@@ -30,7 +30,7 @@ class LoginController extends Controller {
         if (isset($_POST['email'])){
             $email = $_POST['email'];
             $password = md5($_POST['password']);
-            $sql = "SELECT * FROM `".db_pref."users` WHERE `EMAIL`='$email' AND `PASSWORD`='$password' AND STATUS > 0 LIMIT 1";
+            $sql = "SELECT * FROM `agcms_users` WHERE `EMAIL`='$email' AND `PASSWORD`='$password' AND STATUS > 0 LIMIT 1";
             $query = $this->db->query($sql);
 
             if ($this->db->num_rows($query) > 0){

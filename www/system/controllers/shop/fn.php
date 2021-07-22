@@ -10,7 +10,7 @@ function print_latest_shop ($params, &$smarty) {
         $show_parent_category = $params['parent'];
         $image_width = $params['image_width'];
         $image_height = $params['image_height'];
-        $sql = "SELECT * FROM `".db_pref."shop_i` WHERE `PUBLIC`=1 ORDER BY ID DESC LIMIT $count";
+        $sql = "SELECT * FROM `agcms_shop_i` WHERE `PUBLIC`=1 ORDER BY ID DESC LIMIT $count";
         $query = $db->query($sql);
         if ($db->num_rows($query) > 0){
             for ($i=0; $i < $db->num_rows($query); $i++) {
@@ -27,7 +27,7 @@ function print_latest_shop ($params, &$smarty) {
                     sort($parents);
                     $str = implode(",",$parents);
                     if (count($parents)>0) {
-                        $sql2 = "SELECT * FROM `".db_pref."shop_c`  WHERE `ID` IN ($str) AND `PUBLIC`=1";
+                        $sql2 = "SELECT * FROM `agcms_shop_c`  WHERE `ID` IN ($str) AND `PUBLIC`=1";
                         $query2 = $db->query($sql2);
                         for ($i2=0; $i2 < $db->num_rows($query2); $i2++) {
                             $row2 = $db->fetch_array($query2);
@@ -53,7 +53,7 @@ function ShopGetDiscount ($params, &$smarty) {
         $image_width = $params['image_width'];
         $image_height = $params['image_height'];
         $show_parent_category = $params['parent'];
-        $sql = "SELECT * FROM `".db_pref."shop_i` WHERE `PUBLIC`=1 AND `PRICE_NEW` > 0 ORDER BY ID DESC LIMIT $count";
+        $sql = "SELECT * FROM `agcms_shop_i` WHERE `PUBLIC`=1 AND `PRICE_NEW` > 0 ORDER BY ID DESC LIMIT $count";
         $query = $db->query($sql);
         if ($db->num_rows($query) > 0){
             for ($i=0; $i < $db->num_rows($query); $i++) {
@@ -69,7 +69,7 @@ function ShopGetDiscount ($params, &$smarty) {
                     sort($parents);
                     $str = implode(",",$parents);
                     if (count($parents)>0) {
-                        $sql2 = "SELECT * FROM `".db_pref."shop_c`  WHERE `ID` IN ($str) AND `PUBLIC`=1";
+                        $sql2 = "SELECT * FROM `agcms_shop_c`  WHERE `ID` IN ($str) AND `PUBLIC`=1";
                         $query2 = $db->query($sql2);
                         for ($i2=0; $i2 < $db->num_rows($query2); $i2++) {
                             $row2 = $db->fetch_array($query2);
@@ -88,7 +88,7 @@ function ShopGetDiscount ($params, &$smarty) {
 
 function ShopGetTags($params, &$smarty){
     $db = Database::getInstance();
-    $sql = "SELECT * FROM `".db_pref."shop_i` WHERE `TAGS` <> ''";
+    $sql = "SELECT * FROM `agcms_shop_i` WHERE `TAGS` <> ''";
     $query = $db->query($sql);
     $tags = array();
     for ($i=0; $i < $db->num_rows($query); $i++) {
@@ -106,7 +106,7 @@ function ShopGetTags($params, &$smarty){
 function ShopGetCategories($params, &$smarty){
     $db = Database::getInstance();
     $source = $params['source'];
-    $sql = "SELECT * FROM `".db_pref."shop_c` WHERE `PUBLIC` = '1'";
+    $sql = "SELECT * FROM `agcms_shop_c` WHERE `PUBLIC` = '1'";
     $query = $db->query($sql);
     for ($i=0; $i < $db->num_rows($query); $i++) {
         $categories[] = $db->fetch_array($query);
@@ -126,7 +126,7 @@ function ShopGetLinks($params, &$smarty){
     $links_str = array_filter($links_str);
     sort($links_str);
     $links_str = implode(",",$links_str);
-    $sql = "SELECT * FROM `".db_pref."shop_i`  WHERE `ID` IN ($links_str) AND `PUBLIC`=1";
+    $sql = "SELECT * FROM `agcms_shop_i`  WHERE `ID` IN ($links_str) AND `PUBLIC`=1";
     $query = $db->query($sql);
     if ($db->num_rows($query) > 0){
         $links = $db->fetch_all($query);

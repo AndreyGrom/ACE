@@ -79,4 +79,245 @@
                                         <div class="col-md-2 col-sm-6 text-price">
                                             {if $list[i].TYPE == 1}
 
-                                            {if $list[i
+                                            {if $list[i].PRICE_NEW}
+                                            {*<span
+                                                style="text-decoration: line-through;font-size: 16px;">{$list[i].C_ZN}{$list[i].PRICE}</span>*}
+                                            {$list[i].C_ZN}{$list[i].PRICE_NEW}
+                                            {else}
+                                            {$list[i].C_ZN}{$list[i].PRICE}
+                                            {/if}
+                                            {/if}
+                                        </div>
+                                        <div class="col-md-3 col-lg-2 col-sm-6 btn-box">
+                                            <div class="pull-right">
+                                                {if $list[i].TYPE == 1}
+                                                <form method="post">
+                                                    <input type="hidden" name="id" value="{$list[i].SID}" />
+                                                    <input type="hidden" name="name" value="{$list[i].TITLE}" />
+                                                    <input type="hidden" name="desc"
+                                                        value="{$category.TITLE} - {$item.TITLE}" />
+                                                    <input type="hidden" name="type" value="{$list[i].TYPE}" />
+                                                    <input type="hidden" name="c_zn" value="{$list[i].C_ZN}" />
+                                                    <input type="hidden" name="cur" value="{$list[i].C_CURRENCY}" />
+                                                    <input type="hidden" name="price" value="{$list[i].PRICE}" />
+                                                    <input type="hidden" name="price_new"
+                                                        value="{$list[i].PRICE_NEW}" />
+                                                    <button type="submit" name="add-order" class="btn btn-secondary">
+                                                        Заказать
+                                                    </button>
+                                                </form>
+                                                {/if}
+                                            </div>
+                                        </div>
+
+
+                                </h3>
+
+                            </div>
+                            {/if}
+                            <div id="collapse-{$smarty.section.i.index}"
+                                class="collapse {if $list[i].TYPE == 3 || $list[i].TYPE == 4 || $list[i].TYPE == 2}show{/if}"
+                                aria-labelledby="heading-{$smarty.section.i.index}">
+                                <div class="card-body">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            {if $list[i].TYPE == 2}
+                                            <div class="row consultant-details">
+                                                <div class="col-md-8">
+                                                    <img class="rounded-circle"
+                                                        src="/upload/images/services/{$list[i].PHOTO}" alt="" />
+                                                    <div class="copy">
+                                                        <h3>{$list[i].NAME}</h3>
+
+                                                        <div class="bullets">
+                                                            <p>- {$list[i].BULLET1}</p>
+                                                            <p>- {$list[i].BULLET2}</p>
+                                                            <p>- {$list[i].BULLET3}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-7 col-lg-8">
+                                                    {* $list[i].DESC *}
+                                                </div>
+                                                <div class="col-md-2 col-sm-6 text-price">
+                                                    {if $list[i].PRICE_NEW}
+                                                    {*<span
+                                                        style="text-decoration: line-through;font-size: 16px;">{$list[i].C_ZN}{$list[i].PRICE}</span>*}
+                                                    {$list[i].C_ZN}{$list[i].PRICE_NEW}
+                                                    {else}
+                                                    {$list[i].C_ZN}{$list[i].PRICE}
+                                                    {/if}
+                                                </div>
+                                                <div class="col-md-3 col-lg-2 col-sm-6 btn-box">
+
+                                                    <form method="post">
+                                                        <input type="hidden" name="id" value="{$list[i].SID}" />
+                                                        <input type="hidden" name="name" value="{$list[i].TITLE}" />
+                                                        <input type="hidden" name="desc"
+                                                            value="{$category.TITLE} - {$item.TITLE}" />
+                                                        <input type="hidden" name="type" value="{$list[i].TYPE}" />
+                                                        <input type="hidden" name="c_zn" value="{$list[i].C_ZN}" />
+                                                        <input type="hidden" name="cur" value="{$list[i].C_CURRENCY}" />
+                                                        <input type="hidden" name="price" value="{$list[i].PRICE}" />
+                                                        <input type="hidden" name="price_new"
+                                                            value="{$list[i].PRICE_NEW}" />
+                                                        <button type="submit" name="add-order"
+                                                            class="btn btn-secondary">
+                                                            Заказать
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            {/if}
+
+                                            {if $list[i].TYPE == 1}
+                                            {$list[i].DESC}
+                                            {/if}
+
+                                            {if $list[i].TYPE == 3}
+                                            <div class="row align-items-center">
+                                                <div class="col-md-4 col-lg-5">
+                                                    <p class="rep-capt">{$list[i].TITLE}</p>
+                                                </div>
+                                                <div class="col-md-3 col-lg-2">
+                                                    <select id="" class="select js-select form-control select-level">
+                                                        <option value="0">Уровень</option>
+                                                        {section name=j loop=$levels}
+                                                        {if $list[i].GID == $levels[j].GID}
+                                                        <option data-cur="{$list[i].C_CURRENCY}"
+                                                            data-c_zn="{$list[i].C_ZN}" data-price="{$levels[j].PRICE}"
+                                                            data-price_new="{$levels[j].PRICE_NEW}"
+                                                            value="{$levels[j].ID}">{$levels[j].TITLE}</option>
+                                                        {/if}
+                                                        {/section}
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2 col-lg-3 col-sm-6 text-price">
+                                                    {*<span style="text-decoration:line-through;font-size:16px;"
+                                                        class="price-level"></span>*}
+                                                    {* <span class="price-level_new  text-price"></span>*}
+                                                </div>
+                                                <div class="col-md-3 col-sm-6 col-lg-2 btn-box">
+                                                    <form method="post">
+                                                        <input type="hidden" name="id" value="{$list[i].SID}" />
+                                                        <input type="hidden" name="name" value="" />
+                                                        <input type="hidden" name="desc"
+                                                            value="{$category.TITLE} - {$item.TITLE}" />
+                                                        <input type="hidden" name="type" value="{$list[i].TYPE}" />
+                                                        <input type="hidden" name="c_zn" value="{$list[i].C_ZN}" />
+                                                        <input type="hidden" name="cur" value="{$list[i].C_CURRENCY}" />
+                                                        <input type="hidden" name="price" value="{$list[i].PRICE}" />
+                                                        <input type="hidden" name="price_new"
+                                                            value="{$list[i].PRICE_NEW}" />
+                                                        <button name="add-order" style="display: none" type="submit"
+                                                            class="btn btn-secondary btn-select-level">Заказать
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            {/if}
+
+
+                                            {if $list[i].TYPE == 4}
+                                            <div class="row align-items-center">
+                                                <div class="col-md-3">
+                                                    <select id="select-country" class="select js-select form-control">
+                                                        <option value="0">Страна</option>
+                                                        <option value="5681">США</option>
+                                                        <option value="616">Англия</option>
+                                                        <option value="2172">Канада</option>
+                                                        <option value="10904">Швейцария</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3 col-lg-4">
+                                                    <select style="display: none" id="select-visa"
+                                                        class="select js-select form-control">
+
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6 text-price">
+                                                    {*<span style="text-decoration:line-through;font-size:16px;"
+                                                        class="price"></span>*}
+                                                    <span class="price_new visa-price"></span>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6 col-lg-2 btn-box">
+                                                    <form method="post">
+                                                        <input type="hidden" name="id" value="{$list[i].SID}" />
+                                                        <input type="hidden" name="name" value="" />
+                                                        <input type="hidden" name="desc"
+                                                            value="{$category.TITLE} - {$item.TITLE}" />
+                                                        <input type="hidden" name="type" value="{$list[i].TYPE}" />
+                                                        <input type="hidden" name="c_zn" value="" />
+                                                        <input type="hidden" name="cur" value="" />
+                                                        <input type="hidden" name="price" value="" />
+                                                        <input type="hidden" name="price_new" value="" />
+                                                        <button name="add-order" style="display: none" type="submit"
+                                                            class="btn btn-secondary btn-select-visa">Заказать
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            {/if}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {if $list[i].CAPT2}
+                        <h2>{$list[i].CAPT2}</h2>
+                        {/if}
+                        {/section}
+
+                    </div>
+                </div>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+
+                {if $rews}
+                <div class="section section-overview rews container">
+                    <p class="rew-capt">Клиенты о нас</p>
+                    <div class="row">
+                        {section name=i loop=$rews}
+                        <div class="col-lg-6 rews-item">
+                            <div class="row">
+                                <div class="col-3">
+                                    <img class="rounded-circle" src="/upload/images/services/{$rews[i].PHOTO}" alt="" />
+                                </div>
+                                <div class="col-9">
+                                    <div class="rew">
+                                        {$rews[i].REW}
+                                    </div>
+                                    <p class="name"><strong>{$rews[i].TITLE},</strong> {$rews[i].RFROM}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {if $smarty.section.i.index_next is div by 2}
+                        <div class="clearfix"></div>
+                        {/if}
+                        {/section}
+                    </div>
+                </div>
+                {/if}
+                <!-- .section-courses -->
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+
+            </div>
+            <!-- .col-primary -->
+
+
+        </div>
+
+
+    </div>
+
+    </div>
+</main><!-- .container -->
+{include file="../../common/footer.tpl"}

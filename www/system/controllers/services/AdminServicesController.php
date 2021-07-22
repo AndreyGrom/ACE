@@ -46,7 +46,7 @@ class AdminServicesController extends AdminController {
         $delete_image     = $this->post['delete_image'];
         $old_image        = $this->post['old_image'];
 
-        $sql = "SELECT * FROM `".db_pref."services_c` WHERE `ALIAS`='$alias'";
+        $sql = "SELECT * FROM `agcms_services_c` WHERE `ALIAS`='$alias'";
         if ($this->act!=='new_c'){
             $sql .= " AND ID <> $this->cid";
         }
@@ -156,7 +156,7 @@ class AdminServicesController extends AdminController {
 
     public function getCategories($parent = false){
         $categories = array();
-        $sql = "SELECT * FROM `".db_pref."services_c` ORDER BY `ID`";
+        $sql = "SELECT * FROM `agcms_services_c` ORDER BY `ID`";
         $query = $this->db->query($sql);
         for ($i=0; $i < $this->db->num_rows($query); $i++) {
             $row = $this->db->fetch_array($query);
@@ -170,7 +170,7 @@ class AdminServicesController extends AdminController {
         if ($parent){
             $where = "WHERE `PARENT` LIKE '%,$parent,%'";
         }
-        $sql = "SELECT * FROM `".db_pref."services_i` $where";
+        $sql = "SELECT * FROM `agcms_services_i` $where";
         $query = $this->db->query($sql);
         $total = $this->db->num_rows($query);
         $this->num_pages = ceil($total / $this->per_page);
@@ -192,7 +192,7 @@ class AdminServicesController extends AdminController {
             $where = "WHERE `PARENT` LIKE '%,$parent,%'";
         }
 
-        $sql = "SELECT * FROM `".db_pref."services_i` $where ORDER BY `ID` DESC $limit";
+        $sql = "SELECT * FROM `agcms_services_i` $where ORDER BY `ID` DESC $limit";
         $query = $this->db->query($sql);
         for ($i=0; $i < $this->db->num_rows($query); $i++) {
             $row = $this->db->fetch_array($query);
@@ -204,7 +204,7 @@ class AdminServicesController extends AdminController {
     }
     public function getCategory($cid){
         $row = array();
-        $sql = "SELECT * FROM `".db_pref."services_c` WHERE `ID`=$cid LIMIT 1";
+        $sql = "SELECT * FROM `agcms_services_c` WHERE `ID`=$cid LIMIT 1";
         $query = $this->db->query($sql);
         if ($this->db->num_rows($query)>0){
             $row = $this->db->fetch_array($query);
@@ -218,8 +218,8 @@ class AdminServicesController extends AdminController {
     }
     public function getItem($id){
         $sql = "SELECT i.*, c.ID AS CID, c.TITLE AS CAT_NAME, c.ALIAS AS CAT_ALIAS
-        FROM `".db_pref."services_i` i
-        LEFT JOIN `".db_pref."services_c` c ON i.PARENT=c.ID
+        FROM `agcms_services_i` i
+        LEFT JOIN `agcms_services_c` c ON i.PARENT=c.ID
         WHERE i.`ID`=$id  LIMIT 1";
         $query = $this->db->query($sql);
         $row = $this->db->fetch_array($query);
@@ -286,10 +286,10 @@ class AdminServicesController extends AdminController {
 
 
     public function DeleteCategory($id){
-        $sql = "SELECT * FROM `".db_pref."services_i` WHERE `PARENT` LIKE '%,$id,%'";
+        $sql = "SELECT * FROM `agcms_services_i` WHERE `PARENT` LIKE '%,$id,%'";
         $query = $this->db->query($sql);
         if ($this->db->num_rows($query) == 0){
-            $sql = "DELETE FROM `".db_pref."services_c` WHERE `ID`=$id";
+            $sql = "DELETE FROM `agcms_services_c` WHERE `ID`=$id";
             $query = $this->db->query($sql);
             $this->Head('?c=services');
         } else {
@@ -298,7 +298,7 @@ class AdminServicesController extends AdminController {
         }
     }
     public function DeleteItem($id){
-        $sql = "SELECT * FROM `".db_pref."services_i` WHERE `ID`=$id LIMIT 1";
+        $sql = "SELECT * FROM `agcms_services_i` WHERE `ID`=$id LIMIT 1";
         $query = $this->db->query($sql);
         $row = $this->db->fetch_array($query);
         if ($row['IMAGES']!==''){
@@ -309,7 +309,7 @@ class AdminServicesController extends AdminController {
                 }
             }
         }
-        $sql = "DELETE FROM `".db_pref."services_i` WHERE `ID`=$id";
+        $sql = "DELETE FROM `agcms_services_i` WHERE `ID`=$id";
         $query = $this->db->query($sql);
     }
     public function ShowCategory($row){
@@ -359,7 +359,7 @@ class AdminServicesController extends AdminController {
     }
 
     public function ShowAddList(){
-        $sql = "SELECT * FROM `".db_pref."service_levels_g` ORDER BY `TITLE`";
+        $sql = "SELECT * FROM `agcms_service_levels_g` ORDER BY `TITLE`";
         $gid = $this->db->select($sql);
         $this->assign(array(
             'countrys'      => $this->GetCountries(),
@@ -369,7 +369,7 @@ class AdminServicesController extends AdminController {
             'visa'           => $this->GetVisas(),
         ));
         if (isset($this->get['aid']) && $this->get['aid'] > 0){
-            $sql = "SELECT * FROM `".db_pref."services_list` WHERE ID = " . $this->get['aid'];
+            $sql = "SELECT * FROM `agcms_services_list` WHERE ID = " . $this->get['aid'];
             $item = $this->db->select($sql, array('single_array' => true));
             $this->assign(array(
                 'item'      => $item,
@@ -555,11 +555,11 @@ class AdminServicesController extends AdminController {
     }
 
     public function GetCountries(){
-        $sql = "SELECT * FROM `".db_pref."country` ORDER BY `COUNTRY_NAME`";
+        $sql = "SELECT * FROM `agcms_country` ORDER BY `COUNTRY_NAME`";
         return $this->db->select($sql);
     }
     public function GetCountry($id){
-        $sql = "SELECT * FROM `".db_pref."country` WHERE COUNTRY_ID = $id LIMIT 1";
+        $sql = "SELECT * FROM `agcms_country` WHERE COUNTRY_ID = $id LIMIT 1";
         return $this->db->select($sql, array('single_array' => true));
     }
 
@@ -581,7 +581,7 @@ class AdminServicesController extends AdminController {
             'new'            => true,
         ));
         if (isset($this->get['aid']) && $this->get['aid'] > 0){
-            $sql = "SELECT * FROM `".db_pref."services_rews` WHERE ID = " . $this->get['aid'];
+            $sql = "SELECT * FROM `agcms_services_rews` WHERE ID = " . $this->get['aid'];
             $item = $this->db->select($sql, array('single_array' => true));
             $this->assign(array(
                 'item'      => $item,

@@ -8,7 +8,7 @@ class AdminRegisterController extends AdminController {
         $this->act2          = $this->get['act2'];
     }
     public function GetUsers(){
-        $sql = "SELECT * FROM `".db_pref."users`";
+        $sql = "SELECT * FROM `agcms_users`";
         $query = $this->db->query($sql);
         for ($i=0; $i < $this->db->num_rows($query); $i++) {
             $row = $this->db->fetch_array($query);
@@ -19,7 +19,7 @@ class AdminRegisterController extends AdminController {
         return $users;
     }
     public function GetUser($id){
-        $sql = "SELECT * FROM `".db_pref."users` WHERE `ID`=$id LIMIT 1";
+        $sql = "SELECT * FROM `agcms_users` WHERE `ID`=$id LIMIT 1";
         $query = $this->db->query($sql);
         if ($this->db->num_rows($query) > 0) {
             $row = $this->db->fetch_array($query);
@@ -30,7 +30,7 @@ class AdminRegisterController extends AdminController {
         return $user;
     }
     public function ShowUsers(){
-        $sql = "SELECT * FROM `".db_pref."users`";
+        $sql = "SELECT * FROM `agcms_users`";
         $params = array(
             'sql' => $sql,
             'per_page' => 20,
@@ -96,7 +96,7 @@ class AdminRegisterController extends AdminController {
         $card = isset($_POST['card']) ? $this->db->input($_POST['card']) : '';
         $signature = isset($_POST['signature']) ? $this->db->input($_POST['signature']) : '';
 
-        $sql = "UPDATE `".db_pref."users` SET
+        $sql = "UPDATE `agcms_users` SET
         `GROUP_ID`='$group_id',
         `FIRST_NAME`='$first_name',
         `LAST_NAME`='$last_name',
@@ -124,7 +124,7 @@ class AdminRegisterController extends AdminController {
     }
     public function DeleteUser(){
         $id = $this->id;
-        $sql = "DELETE FROM `".db_pref."users` WHERE `ID`=$id";
+        $sql = "DELETE FROM `agcms_users` WHERE `ID`=$id";
         $query = $this->db->query($sql);
         $this->Head("?c=register");
     }
@@ -140,7 +140,7 @@ class AdminRegisterController extends AdminController {
     }
     public function GetGroups(){
         $result = false;
-        $sql = "SELECT *,@id:=GROUP_ID, (SELECT COUNT(*) FROM `".db_pref."users` WHERE GROUP_ID=@id) AS CNT FROM `".db_pref."users_group`";
+        $sql = "SELECT *,@id:=GROUP_ID, (SELECT COUNT(*) FROM `agcms_users` WHERE GROUP_ID=@id) AS CNT FROM `agcms_users_group`";
         $query = $this->db->query($sql);
         if ($query){
             $result = $this->db->fetch_all($query);
@@ -149,7 +149,7 @@ class AdminRegisterController extends AdminController {
     }
     public function GetGroup($id){
         $result = false;
-        $sql = "SELECT * FROM `".db_pref."users_group` WHERE GROUP_ID = $id LIMIT 1";
+        $sql = "SELECT * FROM `agcms_users_group` WHERE GROUP_ID = $id LIMIT 1";
         $query = $this->db->query($sql);
         if ($query){
             $result = $this->db->fetch_array($query);
@@ -184,11 +184,11 @@ class AdminRegisterController extends AdminController {
         $name = $this->post['GROUP_NAME'];
         $icon = $this->post['GROUP_ICON'];
         if ($this->id == 0){
-            $sql = "INSERT INTO `".db_pref."users_group`
+            $sql = "INSERT INTO `agcms_users_group`
             (GROUP_NAME,GROUP_ICON) VALUES
             ('$name','$icon')";
         } else {
-            $sql = "UPDATE `".db_pref."users_group` SET
+            $sql = "UPDATE `agcms_users_group` SET
             GROUP_NAME = '$name',
             GROUP_ICON = '$icon'
             WHERE GROUP_ID = $this->id";

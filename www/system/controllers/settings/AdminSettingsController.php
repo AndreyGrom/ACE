@@ -18,7 +18,7 @@ class AdminSettingsController extends AdminController {
             $this->Head("?c=settings");
         }
 
-        $sql = "SELECT * FROM `".db_pref."country` ORDER BY `COUNTRY_NAME`";
+        $sql = "SELECT * FROM `agcms_country` ORDER BY `COUNTRY_NAME`";
         $query = $this->db->query($sql);
         for ($i=0; $i < $this->db->num_rows($query); $i++) {
             $row = $this->db->fetch_array($query);
@@ -29,7 +29,7 @@ class AdminSettingsController extends AdminController {
 
         if ($this->config->SiteCountryID){
             $country_id = $this->config->SiteCountryID;
-            $sql = "SELECT * FROM `".db_pref."regions` WHERE `COUNTRY_ID`= $country_id  ORDER BY `REGION_NAME`";
+            $sql = "SELECT * FROM `agcms_regions` WHERE `COUNTRY_ID`= $country_id  ORDER BY `REGION_NAME`";
             $query = $this->db->query($sql);
             for ($i=0; $i < $this->db->num_rows($query); $i++) {
                 $row = $this->db->fetch_array($query);
@@ -40,7 +40,7 @@ class AdminSettingsController extends AdminController {
         }
         if ($this->config->SiteRegionID){
             $region_id = $this->config->SiteRegionID;
-            $sql = "SELECT * FROM `".db_pref."city` WHERE `REGION_ID`= $region_id  ORDER BY `CITY_NAME`";
+            $sql = "SELECT * FROM `agcms_city` WHERE `REGION_ID`= $region_id  ORDER BY `CITY_NAME`";
             $query = $this->db->query($sql);
             for ($i=0; $i < $this->db->num_rows($query); $i++) {
                 $row = $this->db->fetch_array($query);

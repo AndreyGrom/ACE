@@ -113,7 +113,7 @@ class AdminHomeController extends AdminController {
 
     public function ShowRew(){
         if (isset($this->get['id']) && $this->get['id'] > 0){
-            $sql = "SELECT * FROM `".db_pref."services_rews` WHERE ID = " . $this->get['id'];
+            $sql = "SELECT * FROM `agcms_services_rews` WHERE ID = " . $this->get['id'];
             $item = $this->db->select($sql, array('single_array' => true));
             $this->assign(array(
                 'item'      => $item,

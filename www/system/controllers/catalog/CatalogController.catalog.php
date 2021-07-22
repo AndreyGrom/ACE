@@ -14,7 +14,7 @@ class CatalogController extends Controller {
 
     public function GetCategory($alias){
         $result = false;
-        $sql = "SELECT * FROM `".db_pref."catalog_c` WHERE `ALIAS` = '$alias' AND `PUBLIC`=1 LIMIT 1";
+        $sql = "SELECT * FROM `agcms_catalog_c` WHERE `ALIAS` = '$alias' AND `PUBLIC`=1 LIMIT 1";
         $query = $this->db->query($sql);
         if ($this->db->num_rows($query) > 0){
             $result = $this->db->fetch_array($query);
@@ -223,7 +223,7 @@ class CatalogController extends Controller {
     }
 
     public function ShowCategories(){
-        $sql = "SELECT * FROM `".db_pref."catalog_c` WHERE `PARENT` = '$this->cid' AND `PUBLIC`=1"; // получаем потомков
+        $sql = "SELECT * FROM `agcms_catalog_c` WHERE `PARENT` = '$this->cid' AND `PUBLIC`=1"; // получаем потомков
         $query = $this->db->query($sql);
         if ($this->db->num_rows($query) > 0){ // Если в категории есть подкатегории, то выводим их
             for ($i=0; $i < $this->db->num_rows($query); $i++) {
@@ -246,17 +246,17 @@ class CatalogController extends Controller {
     }
 
     public function GetCountries(){
-        $sql = "SELECT * FROM `".db_pref."country` ORDER BY `COUNTRY_NAME`";
+        $sql = "SELECT * FROM `agcms_country` ORDER BY `COUNTRY_NAME`";
         return $this->db->select($sql);
     }
 
     public function GetRegions($id){
-        $sql = "SELECT * FROM `".db_pref."regions` WHERE COUNTRY_ID = $id ORDER BY `REGION_NAME`";
+        $sql = "SELECT * FROM `agcms_regions` WHERE COUNTRY_ID = $id ORDER BY `REGION_NAME`";
         return $this->db->select($sql);
     }
 
     public function GetCities($id){
-        $sql = "SELECT * FROM `".db_pref."city` WHERE REGION_ID = $id ORDER BY `CITY_NAME`";
+        $sql = "SELECT * FROM `agcms_city` WHERE REGION_ID = $id ORDER BY `CITY_NAME`";
         return $this->db->select($sql);
     }
 
@@ -424,11 +424,11 @@ class CatalogController extends Controller {
 
     public function ShowItem($id=0){;
         if ($id > 0){
-            $sql = "SELECT * FROM `".db_pref."catalog_i`  WHERE `ID` = '$id' AND `PUBLIC`=1 LIMIT 1";
+            $sql = "SELECT * FROM `agcms_catalog_i`  WHERE `ID` = '$id' AND `PUBLIC`=1 LIMIT 1";
         } else {
             $sql = "SELECT i.*, country.*, region.*, city.*,
             (SELECT MIN(c.PRODOL_COUNT) FROM agcms_catalog_courses c WHERE c.NET_ID = i.NET_ID OR c.SH_ID =i.ID) AS MIN_COUNT
-            FROM `".db_pref."catalog_i` i
+            FROM `agcms_catalog_i` i
                     LEFT JOIN agcms_country country ON country.COUNTRY_ID = i.COUNTRY_ID
                     LEFT JOIN agcms_regions region ON region.REGION_ID = i.REGION_ID
                     LEFT JOIN agcms_city city ON city.CITY_ID = i.CITY_ID
@@ -479,7 +479,7 @@ class CatalogController extends Controller {
             $parents = array_filter($parents);
             sort($parents);
             $str = implode(",",$parents);
-            $sql = "SELECT * FROM `".db_pref."catalog_c`  WHERE `ID` IN ($str) AND `PUBLIC`=1";
+            $sql = "SELECT * FROM `agcms_catalog_c`  WHERE `ID` IN ($str) AND `PUBLIC`=1";
             $query = $this->db->query($sql);
             for ($i=0; $i < $this->db->num_rows($query); $i++) {
                 $row = $this->db->fetch_array($query);
@@ -498,7 +498,7 @@ class CatalogController extends Controller {
                         $sql.= "`TAGS` LIKE '%$t%'";
                     }
                 }
-                $sql = "SELECT * FROM `".db_pref."catalog_i` WHERE `ID` <> ".$item["ID"]." AND ( ".$sql." ) ORDER BY `DATE_EDIT` DESC LIMIT 10";
+                $sql = "SELECT * FROM `agcms_catalog_i` WHERE `ID` <> ".$item["ID"]." AND ( ".$sql." ) ORDER BY `DATE_EDIT` DESC LIMIT 10";
                 $query = $this->db->query($sql);
                 for ($i=0; $i < $this->db->num_rows($query); $i++) {
                     $row = $this->db->fetch_array($query);
@@ -514,7 +514,7 @@ class CatalogController extends Controller {
                         $sql.= "`PARENT` LIKE '%$t%'";
                     }
                 }
-                $sql = "SELECT * FROM `".db_pref."catalog_i` WHERE `ID` <> ".$item["ID"]." AND ( ".$sql." ) ORDER BY `DATE_EDIT` DESC LIMIT 10";
+                $sql = "SELECT * FROM `agcms_catalog_i` WHERE `ID` <> ".$item["ID"]." AND ( ".$sql." ) ORDER BY `DATE_EDIT` DESC LIMIT 10";
                 $query = $this->db->query($sql);
                 for ($i=0; $i < $this->db->num_rows($query); $i++) {
                     $row = $this->db->fetch_array($query);

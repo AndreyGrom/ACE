@@ -49,7 +49,7 @@ class AdminSiteeditController extends AdminController {
                         } else {
                             $s = $this->db->input($e->innertext);
                         }
-                        $sql = "INSERT INTO `".db_pref."siteedit_vars`(`HTML`,`TAG`,`PATH`) VALUES ('$s','$tag','$path')";
+                        $sql = "INSERT INTO `agcms_siteedit_vars`(`HTML`,`TAG`,`PATH`) VALUES ('$s','$tag','$path')";
                         $this->db->query($sql);
                         $id = $this->db->last_id();
                         if ($tag == 'img'){
@@ -97,7 +97,7 @@ class AdminSiteeditController extends AdminController {
 
     function getVars(){
         $list = array();
-        $sql = "SELECT * FROM `".db_pref."siteedit_vars`";
+        $sql = "SELECT * FROM `agcms_siteedit_vars`";
         $query = $this->db->query($sql);
         for ($i=0; $i < $this->db->num_rows($query); $i++) {
             $list[] = $this->db->fetch_array($query);
@@ -106,7 +106,7 @@ class AdminSiteeditController extends AdminController {
     }
 
     function ClearVars(){
-        $sql = "TRUNCATE TABLE `".db_pref."siteedit_vars`";
+        $sql = "TRUNCATE TABLE `agcms_siteedit_vars`";
         $this->db->query($sql);
     }
 

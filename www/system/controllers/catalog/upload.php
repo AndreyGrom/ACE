@@ -39,7 +39,7 @@ if (isset($_FILES)){
         $upload = UPLOAD_IMAGES_DIR.'catalog/';
 
         $cache_img = CACHE_IMAGES;
-        $sql = "SELECT * FROM `".db_pref."catalog_i` WHERE ID=$id";
+        $sql = "SELECT * FROM `agcms_catalog_i` WHERE ID=$id";
         $query = $db->query($sql);
         $row = $db->fetch_array($query);
         $str = $row["IMAGES"];
@@ -56,7 +56,7 @@ if (isset($_FILES)){
                 $skin = ", SKIN='".$images[0]."'";
             }
             $str = implode(",", $images);
-            $sql = "UPDATE `".db_pref."catalog_i` SET `IMAGES`='$str' $skin WHERE ID=$id";
+            $sql = "UPDATE `agcms_catalog_i` SET `IMAGES`='$str' $skin WHERE ID=$id";
 
             $query = $db->query($sql);
         }
@@ -74,7 +74,7 @@ if (isset($_FILES)){
         $id = $_GET['id'];
         $files = array();
         $upload = UPLOAD_FILES_DIR.'catalog/';
-        $sql = "SELECT * FROM `".db_pref."catalog_i` WHERE ID=$id";
+        $sql = "SELECT * FROM `agcms_catalog_i` WHERE ID=$id";
         $query = $db->query($sql);
         $row = $db->fetch_array($query);
         $str = $row["FILES"];
@@ -96,7 +96,7 @@ if (isset($_FILES)){
             );
             $files[] = $file_info;
             $str = serialize($files);
-            $sql = "UPDATE `".db_pref."catalog_i` SET `FILES`='$str' WHERE ID=$id";
+            $sql = "UPDATE `agcms_catalog_i` SET `FILES`='$str' WHERE ID=$id";
             $query = $db->query($sql);
 
         }
@@ -110,13 +110,13 @@ if (isset($_FILES)){
 if (isset($_POST['skin'])){
     $id = $_POST['id'];
     $skin = $_POST['skin'];
-    $sql = "UPDATE `".db_pref."catalog_i` SET `SKIN`='$skin' WHERE ID=$id";
+    $sql = "UPDATE `agcms_catalog_i` SET `SKIN`='$skin' WHERE ID=$id";
     $db->query($sql);
 }
 if (isset($_POST['image'])){
     $id = $_POST['id'];
     $image= $_POST['image'];
-    $sql = "SELECT * FROM `".db_pref."catalog_i` WHERE ID=$id";
+    $sql = "SELECT * FROM `agcms_catalog_i` WHERE ID=$id";
     $query = $db->query($sql);
     $row = $db->fetch_array($query);
     $str = $row["IMAGES"];
@@ -128,7 +128,7 @@ if (isset($_POST['image'])){
             }
         }
         $str = implode(',',$images_);
-        $sql = "UPDATE `".db_pref."catalog_i` SET `IMAGES`='$str' WHERE ID=$id";
+        $sql = "UPDATE `agcms_catalog_i` SET `IMAGES`='$str' WHERE ID=$id";
         $db->query($sql);
 
         $file = $_SERVER['DOCUMENT_ROOT'].'/'.UPLOAD_IMAGES_DIR.'catalog/'.$image;
@@ -140,7 +140,7 @@ if (isset($_POST['image'])){
 if (isset($_POST['file'])){
     $id = $_POST['id'];
     $file= $_POST['file'];
-    $sql = "SELECT * FROM `".db_pref."catalog_i` WHERE ID=$id";
+    $sql = "SELECT * FROM `agcms_catalog_i` WHERE ID=$id";
     $query = $db->query($sql);
     $row = $db->fetch_array($query);
     $str = $row["FILES"];
@@ -152,7 +152,7 @@ if (isset($_POST['file'])){
             }
         }
         $str = serialize($files_);
-        $sql = "UPDATE `".db_pref."catalog_i` SET `FILES`='$str' WHERE ID=$id";
+        $sql = "UPDATE `agcms_catalog_i` SET `FILES`='$str' WHERE ID=$id";
         $db->query($sql);
 
         $file = $_SERVER['DOCUMENT_ROOT'].'/'.UPLOAD_FILES_DIR.'catalog/'.$file;

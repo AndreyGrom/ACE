@@ -16,7 +16,7 @@ if ($this->config->siteedit_enabled ) {
         $vars_array_str = implode(',',$_SERVER['vars_array']);
 
         $_SERVER['vars_array'] = array();
-        $sql = "SELECT * FROM `".db_pref."siteedit_vars` WHERE ID IN ($vars_array_str)";
+        $sql = "SELECT * FROM `agcms_siteedit_vars` WHERE ID IN ($vars_array_str)";
         $query = $this->db->query($sql);
         if ($this->db->num_rows($query) > 0){
             $_SERVER['vars_array'] = $this->db->fetch_all($query);

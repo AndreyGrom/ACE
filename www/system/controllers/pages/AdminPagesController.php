@@ -103,7 +103,7 @@ class AdminPagesController extends AdminController {
 
     public function getSiteMap(){
         $return = array();
-        $sql = "SELECT ALIAS FROM `".db_pref."pages`  WHERE `PUBLIC`=1 ORDER BY `DATE_PUBL` DESC";
+        $sql = "SELECT ALIAS FROM `agcms_pages`  WHERE `PUBLIC`=1 ORDER BY `DATE_PUBL` DESC";
         $result = $this->db->query($sql);
         if ($this->db->num_rows($result)){
             for ($i = 0; $i < $this->db->num_rows($result); $i++){

@@ -10,7 +10,7 @@ if (isset($_POST['id'])){
     $db = Database::getInstance();
     $id = $_POST['id'];
     $html = $db->input($_POST['html']);;
-    $sql = "UPDATE `".db_pref."siteedit_vars` SET `HTML`='$html' WHERE `ID`=$id";
+    $sql = "UPDATE `agcms_siteedit_vars` SET `HTML`='$html' WHERE `ID`=$id";
     $db->query($sql);
     echo 1;
 }

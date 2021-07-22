@@ -10,7 +10,7 @@ class RegisterController extends Controller {
     public function SaveUser(){
 
 /*        $id = $this->user['ID'];
-        $sql = "SELECT FROM `".db_pref."users` WHERE ID=$id LIMIT 1";
+        $sql = "SELECT FROM `agcms_users` WHERE ID=$id LIMIT 1";
         $query = $this->db->query($sql);
         $user = $this->db->fetch_array($query);*/
         $password = ($this->post['password'] !== '') ? md5($this->db->input($_POST['password'])) : $this->user['PASSWORD'];
@@ -37,7 +37,7 @@ class RegisterController extends Controller {
         $card = isset($_POST['card']) ? strip_tags($this->db->input($_POST['card'])) : $this->user['CARD'];
         $signature = isset($_POST['signature']) ? strip_tags($this->db->input($_POST['signature']),$this->tags) : $this->user['SIGNATURE'];
 
-        $sql = "UPDATE `".db_pref."users` SET
+        $sql = "UPDATE `agcms_users` SET
         `FIRST_NAME`='$first_name',
         `LAST_NAME`='$last_name',
         `FATHER_NAME`='$father_name',
@@ -67,7 +67,7 @@ class RegisterController extends Controller {
                 $ip = $_SERVER['REMOTE_ADDR'];
                 $hash = $this->generateName(30);
                 $date = time();
-                $sql = "SELECT * FROM `".db_pref."users` WHERE `EMAIL`='$email' AND STATUS = 1";
+                $sql = "SELECT * FROM `agcms_users` WHERE `EMAIL`='$email' AND STATUS = 1";
                 $query = $this->db->query($sql);
                 if ($this->db->num_rows($query) > 0){
                     $this->error = 'Email "<b>'.$email.'</b>" уже зарегистрирован в системе!';
@@ -139,7 +139,7 @@ class RegisterController extends Controller {
                 $ip = $_SERVER['REMOTE_ADDR'];
                 $hash = $this->generateName(30);
                 $date = time();
-                $sql = "SELECT * FROM `".db_pref."users` WHERE `EMAIL`='$email' AND STATUS = 1";
+                $sql = "SELECT * FROM `agcms_users` WHERE `EMAIL`='$email' AND STATUS = 1";
                 $query = $this->db->query($sql);
                 if ($this->db->num_rows($query) > 0){
                     $this->error = 'Email "<b>'.$email.'</b>" уже зарегистрирован в системе!';

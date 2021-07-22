@@ -100,8 +100,8 @@ input::placeholder{
     color: #2b4253;
 }
 .input__control{
-    font-size: 17px !important;
-    color: #2b4253 !important;
+    /* font-size: 17px !important;
+    color: #2b4253 !important; */
     /* font-family: "PT Sans", sans-serif !important; */
 }
 .btn--submit-filter{

@@ -3,7 +3,7 @@ require_once(CLASSES_DIR.'DB.class.php');
 if (isset($_POST['get_city'])){
     $id = $_POST['get_city'];
     $db = Database::getInstance();
-    $sql = "SELECT * FROM `".db_pref."city` WHERE `REGION_ID`=$id ORDER BY `CITY_NAME`";
+    $sql = "SELECT * FROM `agcms_city` WHERE `REGION_ID`=$id ORDER BY `CITY_NAME`";
     $result = '';
     $query = $db->query($sql);
     if ($db->num_rows($query) > 0){
@@ -17,7 +17,7 @@ if (isset($_POST['get_city'])){
 if (isset($_POST['get_region'])){
     $id = $_POST['get_region'];
     $db = Database::getInstance();
-    $sql = "SELECT * FROM `".db_pref."regions` WHERE `COUNTRY_ID`=$id ORDER BY `REGION_NAME`";
+    $sql = "SELECT * FROM `agcms_regions` WHERE `COUNTRY_ID`=$id ORDER BY `REGION_NAME`";
     $result = '';
     $query = $db->query($sql);
     if ($db->num_rows($query) > 0){

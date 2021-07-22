@@ -14,7 +14,7 @@ class ServicesController extends Controller {
 
     public function GetCategory($alias){
         $result = false;
-        $sql = "SELECT * FROM `".db_pref."services_c` WHERE `ALIAS` = '$alias' LIMIT 1";
+        $sql = "SELECT * FROM `agcms_services_c` WHERE `ALIAS` = '$alias' LIMIT 1";
         $query = $this->db->query($sql);
         if ($this->db->num_rows($query) > 0){
             $result = $this->db->fetch_array($query);

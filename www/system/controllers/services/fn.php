@@ -7,7 +7,7 @@
         $sort = isset($params['sort'])?$params['sort']:'DATE_PUBL ASC';
         $sort = "ORDER BY $sort";
 
-        $sql = "SELECT * FROM `".db_pref."catalog_i` WHERE `PARENT` LIKE '%,$cid,%' AND `PUBLIC`=1 $sort";
+        $sql = "SELECT * FROM `agcms_catalog_i` WHERE `PARENT` LIKE '%,$cid,%' AND `PUBLIC`=1 $sort";
         $query = $db->query($sql);
         if ($db->num_rows($query) > 0){
             for ($i=0; $i < $db->num_rows($query); $i++) {
@@ -22,7 +22,7 @@
 function ServicesGetCategories($params, &$smarty){
     $db = Database::getInstance();
     $source = $params['source'];
-    $sql = "SELECT * FROM `".db_pref."services_i`";
+    $sql = "SELECT * FROM `agcms_services_i`";
     if (isset($params['id'])){
         $sql .= " WHERE PARENT LIKE '%," . $params['id'] . ",%'";
     }

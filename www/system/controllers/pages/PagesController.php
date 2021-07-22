@@ -3,7 +3,7 @@
 class PagesController extends Controller {
     public function __construct($query, $controller) {
         parent::__construct($query, $controller);
-        $this->table_name = '`'.db_pref.'pages`';
+        $this->table_name = 'agcms_pages';
         $this->module_alias = 'pages';
     }
     public function Index(){
@@ -37,7 +37,7 @@ class PagesController extends Controller {
 
             $sql = "SELECT * FROM `agcms_catalog_predmets`";
             $predmets =  $this->db->select($sql);
-            $sql = "SELECT * FROM `".db_pref."country` ORDER BY `COUNTRY_NAME`";
+            $sql = "SELECT * FROM `agcms_country` ORDER BY `COUNTRY_NAME`";
             $countries = $this->db->select($sql);
 
             $this->SetPath($this->module_alias.'/');
@@ -96,7 +96,7 @@ class PagesController extends Controller {
 
 
     public function getSiteMap(){
-        $sql = "SELECT ALIAS FROM `".db_pref."pages`  WHERE `PUBLIC`=1 ORDER BY `DATE_PUBL` DESC";
+        $sql = "SELECT ALIAS FROM `agcms_pages`  WHERE `PUBLIC`=1 ORDER BY `DATE_PUBL` DESC";
         $result = $this->db->query($sql);
         $return = array();
         if ($this->db->num_rows($result)){

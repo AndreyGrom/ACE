@@ -4,13 +4,13 @@ if (isset($_COOKIE['hash']) && isset($_COOKIE['user_id']) && $_COOKIE['hash']!==
     $user_id = $_COOKIE['user_id'];
     $user_hash = $_COOKIE['hash'];
     $db = Database::getInstance();
-    $sql = "SELECT * FROM `".db_pref."users` WHERE `ID` = '$user_id' AND `HASH` = '$user_hash' AND STATUS > 0 LIMIT 1";
+    $sql = "SELECT * FROM `agcms_users` WHERE `ID` = '$user_id' AND `HASH` = '$user_hash' AND STATUS > 0 LIMIT 1";
     $query = $db->query($sql);
     if ($db->num_rows($query) > 0){
         $_SESSION['user'] = $db->fetch_array($query);
         $id = $_SESSION['user']['ID'];
         $date = time();
-        $sql = "UPDATE `".db_pref."users` SET `DATE_ACTIVE` = '$date' WHERE `ID`='$id'";
+        $sql = "UPDATE `agcms_users` SET `DATE_ACTIVE` = '$date' WHERE `ID`='$id'";
         $query = $db->query($sql);
         
     } else {

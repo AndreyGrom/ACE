@@ -28,7 +28,7 @@ class CommentsController extends Controller {
                 $parent = $_POST["comment-parent"];
                 $ip = $_SERVER["REMOTE_ADDR"];
                 $status = !$this->premoderation;
-                $sql = "INSERT INTO `".db_pref."comments` (`CONTROLLER`,`MATERIAL_ID`,`DATE_PUBL`,`USER_NAME`,`USER_EMAIL`,`USER_COMMENT`,`PARENT`,`IP`,`STATUS`)
+                $sql = "INSERT INTO `agcms_comments` (`CONTROLLER`,`MATERIAL_ID`,`DATE_PUBL`,`USER_NAME`,`USER_EMAIL`,`USER_COMMENT`,`PARENT`,`IP`,`STATUS`)
                 VALUES ('$this->controller','$this->material_id','$date_publ','$user_name','$user_email','$user_comment','$parent','$ip','$status')";
                 $query = $this->db->query($sql);
                 $id = $this->db->last_id();
@@ -48,7 +48,7 @@ class CommentsController extends Controller {
         }
         $comments = array();
         if ($this->material_id > 0){
-            $sql = "SELECT * FROM `".db_pref."comments` WHERE `CONTROLLER` = '$this->controller' AND `MATERIAL_ID` = '$this->material_id' AND `STATUS` = '1' ORDER BY `DATE_PUBL` DESC";
+            $sql = "SELECT * FROM `agcms_comments` WHERE `CONTROLLER` = '$this->controller' AND `MATERIAL_ID` = '$this->material_id' AND `STATUS` = '1' ORDER BY `DATE_PUBL` DESC";
             $query = $this->db->query($sql);
             if ($this->db->num_rows($query) > 0){
                 for ($i=0; $i < $this->db->num_rows($query); $i++) {
