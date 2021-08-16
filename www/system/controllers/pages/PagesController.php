@@ -57,11 +57,10 @@ class PagesController extends Controller {
             ));
 
             if ($row['ID'] == 1){
-
-
                 $this->assign(array(
                     'spec'  => $this->GetSpec(),
                     'rews'  => $this->GetRews(),
+                    'popular'  => $this->GetPopular(),
                 ));
             }
 
@@ -80,11 +79,21 @@ class PagesController extends Controller {
             FROM agcms_spec s
             LEFT JOIN agcms_catalog_i i ON s.SCH_ID = i.ID
             LEFT JOIN agcms_country co ON co.COUNTRY_ID = i.COUNTRY_ID
-            LEFT JOIN agcms_city city ON city.CITY_ID = i.CITY_ID
-
-            ";
+            LEFT JOIN agcms_city city ON city.CITY_ID = i.CITY_ID";
         return $this->db->select($sql);
+    }
 
+    public function GetPopular(){
+        $sql = "SELECT popular.POPULAR_ID, country.COUNTRY_NAME, city.CITY_NAME, course.TITLE, i.PHOTO1,
+                country.C_CURRENCY, i.ALIAS,
+                   (SELECT MIN(cour.PRICE) FROM agcms_catalog_courses cour WHERE cour.ID = popular.POPULAR_ID AND cour.PRICE > 0) as MIN_PRICE
+        FROM agcms_popular popular
+        LEFT JOIN agcms_catalog_courses course ON course.ID = popular.POPULAR_ID
+        LEFT JOIN agcms_catalog_i i ON i.ID = course.SH_ID
+        LEFT JOIN agcms_country country ON country.COUNTRY_ID = i.COUNTRY_ID
+        LEFT JOIN agcms_city city ON city.CITY_ID = i.CITY_ID";
+        $item = $this->db->select($sql);
+        return $item;
     }
 
     public function GetRews(){

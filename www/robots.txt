@@ -2,3 +2,4 @@ User-agent: *
 Disallow: /
 
 Host:a-grom.ru
+Sitemap: http://xn--e1aibyw.xn--p1ai/sitemap.xml

@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Хост: eklad-8212.mysql
--- Время создания: Июл 21 2021 г., 18:12
--- Версия сервера: 5.6.41-84.1
--- Версия PHP: 7.2.19
+-- Хост: 127.0.0.1:3306
+-- Время создания: Авг 10 2021 г., 08:37
+-- Версия сервера: 5.7.33
+-- Версия PHP: 7.1.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -27,10 +26,7 @@ SET time_zone = "+00:00";
 --
 -- Структура таблицы `agcms_alias`
 --
--- Создание: Мар 18 2020 г., 08:32
---
 
-DROP TABLE IF EXISTS `agcms_alias`;
 CREATE TABLE `agcms_alias` (
   `ID` int(11) NOT NULL,
   `CONTROLLER` varchar(255) NOT NULL,
@@ -42,10 +38,7 @@ CREATE TABLE `agcms_alias` (
 --
 -- Структура таблицы `agcms_cart`
 --
--- Создание: Июл 06 2021 г., 10:52
---
 
-DROP TABLE IF EXISTS `agcms_cart`;
 CREATE TABLE `agcms_cart` (
   `ID` int(11) NOT NULL,
   `HASH` varchar(255) NOT NULL,
@@ -74,10 +67,7 @@ INSERT INTO `agcms_cart` (`ID`, `HASH`, `ORDER`, `ORDER2`) VALUES
 --
 -- Структура таблицы `agcms_catalog_c`
 --
--- Создание: Мар 18 2020 г., 08:32
---
 
-DROP TABLE IF EXISTS `agcms_catalog_c`;
 CREATE TABLE `agcms_catalog_c` (
   `ID` int(11) NOT NULL,
   `PARENT` int(11) NOT NULL,
@@ -109,10 +99,7 @@ INSERT INTO `agcms_catalog_c` (`ID`, `PARENT`, `TITLE`, `ALIAS`, `POSITION`, `PU
 --
 -- Структура таблицы `agcms_catalog_courses`
 --
--- Создание: Июл 31 2020 г., 12:12
---
 
-DROP TABLE IF EXISTS `agcms_catalog_courses`;
 CREATE TABLE `agcms_catalog_courses` (
   `ID` int(11) NOT NULL,
   `NET_ID` int(11) NOT NULL,
@@ -661,10 +648,7 @@ INSERT INTO `agcms_catalog_courses` (`ID`, `NET_ID`, `SH_ID`, `TITLE`, `PREDMET`
 --
 -- Структура таблицы `agcms_catalog_dop`
 --
--- Создание: Апр 21 2020 г., 15:41
---
 
-DROP TABLE IF EXISTS `agcms_catalog_dop`;
 CREATE TABLE `agcms_catalog_dop` (
   `ID` int(11) NOT NULL,
   `TITLE` varchar(255) NOT NULL,
@@ -870,10 +854,7 @@ INSERT INTO `agcms_catalog_dop` (`ID`, `TITLE`, `TYPE`) VALUES
 --
 -- Структура таблицы `agcms_catalog_i`
 --
--- Создание: Май 27 2021 г., 10:00
---
 
-DROP TABLE IF EXISTS `agcms_catalog_i`;
 CREATE TABLE `agcms_catalog_i` (
   `ID` int(11) NOT NULL,
   `TITLE` varchar(255) NOT NULL,
@@ -998,10 +979,7 @@ INSERT INTO `agcms_catalog_i` (`ID`, `TITLE`, `ALIAS`, `PARENT`, `TEMPLATE`, `PU
 --
 -- Структура таблицы `agcms_catalog_inc`
 --
--- Создание: Апр 23 2020 г., 12:15
---
 
-DROP TABLE IF EXISTS `agcms_catalog_inc`;
 CREATE TABLE `agcms_catalog_inc` (
   `ID` int(11) NOT NULL,
   `TITLE` varchar(255) NOT NULL,
@@ -1060,10 +1038,7 @@ INSERT INTO `agcms_catalog_inc` (`ID`, `TITLE`, `ICON`) VALUES
 --
 -- Структура таблицы `agcms_catalog_nets`
 --
--- Создание: Мар 24 2020 г., 06:55
---
 
-DROP TABLE IF EXISTS `agcms_catalog_nets`;
 CREATE TABLE `agcms_catalog_nets` (
   `ID` int(11) NOT NULL,
   `TITLE` text CHARACTER SET utf8 NOT NULL
@@ -1083,10 +1058,7 @@ INSERT INTO `agcms_catalog_nets` (`ID`, `TITLE`) VALUES
 --
 -- Структура таблицы `agcms_catalog_predmets`
 --
--- Создание: Май 25 2020 г., 11:18
---
 
-DROP TABLE IF EXISTS `agcms_catalog_predmets`;
 CREATE TABLE `agcms_catalog_predmets` (
   `ID` int(11) NOT NULL,
   `TITLE` varchar(255) NOT NULL
@@ -1109,10 +1081,7 @@ INSERT INTO `agcms_catalog_predmets` (`ID`, `TITLE`) VALUES
 --
 -- Структура таблицы `agcms_catalog_prozhiv`
 --
--- Создание: Май 09 2020 г., 16:20
---
 
-DROP TABLE IF EXISTS `agcms_catalog_prozhiv`;
 CREATE TABLE `agcms_catalog_prozhiv` (
   `ID` int(11) NOT NULL,
   `NET_ID` int(11) NOT NULL,
@@ -1353,10 +1322,7 @@ INSERT INTO `agcms_catalog_prozhiv` (`ID`, `NET_ID`, `SH_ID`, `VID`, `DATE1`, `V
 --
 -- Структура таблицы `agcms_city`
 --
--- Создание: Мар 18 2020 г., 08:32
---
 
-DROP TABLE IF EXISTS `agcms_city`;
 CREATE TABLE `agcms_city` (
   `CITY_ID` int(8) NOT NULL,
   `COUNTRY_ID` int(7) DEFAULT NULL,
@@ -3929,10 +3895,7 @@ INSERT INTO `agcms_city` (`CITY_ID`, `COUNTRY_ID`, `REGION_ID`, `CITY_NAME`, `CI
 --
 -- Структура таблицы `agcms_comments`
 --
--- Создание: Мар 18 2020 г., 08:32
---
 
-DROP TABLE IF EXISTS `agcms_comments`;
 CREATE TABLE `agcms_comments` (
   `ID` int(11) NOT NULL,
   `CONTROLLER` varchar(255) NOT NULL,
@@ -3951,10 +3914,7 @@ CREATE TABLE `agcms_comments` (
 --
 -- Структура таблицы `agcms_config`
 --
--- Создание: Мар 18 2020 г., 08:32
---
 
-DROP TABLE IF EXISTS `agcms_config`;
 CREATE TABLE `agcms_config` (
   `ID` int(11) NOT NULL,
   `PARAM` varchar(255) NOT NULL,
@@ -4160,10 +4120,7 @@ INSERT INTO `agcms_config` (`ID`, `PARAM`, `VALUE`) VALUES
 --
 -- Структура таблицы `agcms_country`
 --
--- Создание: Июн 08 2021 г., 13:24
---
 
-DROP TABLE IF EXISTS `agcms_country`;
 CREATE TABLE `agcms_country` (
   `COUNTRY_ID` int(7) NOT NULL,
   `CITY_ID` int(1) NOT NULL,
@@ -4195,10 +4152,7 @@ INSERT INTO `agcms_country` (`COUNTRY_ID`, `CITY_ID`, `COUNTRY_NAME`, `C_CURRENC
 --
 -- Структура таблицы `agcms_faq_i`
 --
--- Создание: Май 21 2020 г., 13:30
---
 
-DROP TABLE IF EXISTS `agcms_faq_i`;
 CREATE TABLE `agcms_faq_i` (
   `ID` int(11) NOT NULL,
   `TITLE` varchar(255) NOT NULL,
@@ -4219,10 +4173,7 @@ INSERT INTO `agcms_faq_i` (`ID`, `TITLE`, `OTV`) VALUES
 --
 -- Структура таблицы `agcms_orders`
 --
--- Создание: Фев 27 2021 г., 08:47
---
 
-DROP TABLE IF EXISTS `agcms_orders`;
 CREATE TABLE `agcms_orders` (
   `ID` int(11) NOT NULL,
   `USER_ID` int(11) NOT NULL,
@@ -4257,10 +4208,7 @@ INSERT INTO `agcms_orders` (`ID`, `USER_ID`, `DATE_START`, `CONT`, `CONT2`, `STA
 --
 -- Структура таблицы `agcms_pages`
 --
--- Создание: Мар 18 2020 г., 08:32
---
 
-DROP TABLE IF EXISTS `agcms_pages`;
 CREATE TABLE `agcms_pages` (
   `ID` int(11) NOT NULL,
   `PARENT` int(11) NOT NULL,
@@ -4305,10 +4253,7 @@ INSERT INTO `agcms_pages` (`ID`, `PARENT`, `TITLE`, `ALIAS`, `CONTENT`, `META_TI
 --
 -- Структура таблицы `agcms_regions`
 --
--- Создание: Мар 18 2020 г., 08:32
---
 
-DROP TABLE IF EXISTS `agcms_regions`;
 CREATE TABLE `agcms_regions` (
   `REGION_ID` int(11) NOT NULL,
   `COUNTRY_ID` int(11) NOT NULL,
@@ -4513,10 +4458,7 @@ INSERT INTO `agcms_regions` (`REGION_ID`, `COUNTRY_ID`, `CITY_ID`, `REGION_NAME`
 --
 -- Структура таблицы `agcms_services_c`
 --
--- Создание: Янв 31 2021 г., 21:12
---
 
-DROP TABLE IF EXISTS `agcms_services_c`;
 CREATE TABLE `agcms_services_c` (
   `ID` int(11) NOT NULL,
   `PARENT` int(11) NOT NULL,
@@ -4548,10 +4490,7 @@ INSERT INTO `agcms_services_c` (`ID`, `PARENT`, `TITLE`, `ALIAS`, `POSITION`, `P
 --
 -- Структура таблицы `agcms_services_i`
 --
--- Создание: Июн 08 2021 г., 13:40
---
 
-DROP TABLE IF EXISTS `agcms_services_i`;
 CREATE TABLE `agcms_services_i` (
   `ID` int(11) NOT NULL,
   `TITLE` varchar(255) NOT NULL,
@@ -4596,10 +4535,7 @@ INSERT INTO `agcms_services_i` (`ID`, `TITLE`, `TITLE2`, `ALIAS`, `PARENT`, `LEF
 --
 -- Структура таблицы `agcms_services_list`
 --
--- Создание: Мар 18 2021 г., 11:07
---
 
-DROP TABLE IF EXISTS `agcms_services_list`;
 CREATE TABLE `agcms_services_list` (
   `ID` int(11) NOT NULL,
   `SERVICE_ID` int(11) NOT NULL,
@@ -4648,10 +4584,7 @@ INSERT INTO `agcms_services_list` (`ID`, `SERVICE_ID`, `TYPE`, `TITLE`, `DESC`, 
 --
 -- Структура таблицы `agcms_services_rews`
 --
--- Создание: Мар 11 2021 г., 13:36
---
 
-DROP TABLE IF EXISTS `agcms_services_rews`;
 CREATE TABLE `agcms_services_rews` (
   `ID` int(11) NOT NULL,
   `SERVICE_ID` int(11) NOT NULL,
@@ -4681,10 +4614,7 @@ INSERT INTO `agcms_services_rews` (`ID`, `SERVICE_ID`, `TITLE`, `REW`, `RFROM`, 
 --
 -- Структура таблицы `agcms_service_levels`
 --
--- Создание: Мар 18 2021 г., 11:06
---
 
-DROP TABLE IF EXISTS `agcms_service_levels`;
 CREATE TABLE `agcms_service_levels` (
   `ID` int(11) NOT NULL,
   `GID` int(11) NOT NULL,
@@ -4713,10 +4643,7 @@ INSERT INTO `agcms_service_levels` (`ID`, `GID`, `TITLE`, `PRICE`, `PRICE_NEW`) 
 --
 -- Структура таблицы `agcms_service_levels_g`
 --
--- Создание: Мар 18 2021 г., 11:04
---
 
-DROP TABLE IF EXISTS `agcms_service_levels_g`;
 CREATE TABLE `agcms_service_levels_g` (
   `ID` int(11) NOT NULL,
   `TITLE` varchar(255) NOT NULL
@@ -4736,10 +4663,7 @@ INSERT INTO `agcms_service_levels_g` (`ID`, `TITLE`) VALUES
 --
 -- Структура таблицы `agcms_service_visa`
 --
--- Создание: Фев 03 2021 г., 17:08
---
 
-DROP TABLE IF EXISTS `agcms_service_visa`;
 CREATE TABLE `agcms_service_visa` (
   `ID` int(11) NOT NULL,
   `COUNTRY_ID` int(11) NOT NULL,
@@ -4763,10 +4687,7 @@ INSERT INTO `agcms_service_visa` (`ID`, `COUNTRY_ID`, `TYPE`, `PRICE`, `PRICE_NE
 --
 -- Структура таблицы `agcms_siteedit_vars`
 --
--- Создание: Мар 18 2020 г., 08:32
---
 
-DROP TABLE IF EXISTS `agcms_siteedit_vars`;
 CREATE TABLE `agcms_siteedit_vars` (
   `ID` int(11) NOT NULL,
   `HTML` text CHARACTER SET utf8 NOT NULL,
@@ -4832,10 +4753,7 @@ INSERT INTO `agcms_siteedit_vars` (`ID`, `HTML`, `TAG`, `PATH`) VALUES
 --
 -- Структура таблицы `agcms_spec`
 --
--- Создание: Июн 22 2021 г., 11:06
---
 
-DROP TABLE IF EXISTS `agcms_spec`;
 CREATE TABLE `agcms_spec` (
   `ID` int(11) NOT NULL,
   `SCH_ID` int(11) NOT NULL,
@@ -4857,10 +4775,7 @@ INSERT INTO `agcms_spec` (`ID`, `SCH_ID`, `TEXT`) VALUES
 --
 -- Структура таблицы `agcms_users`
 --
--- Создание: Мар 19 2020 г., 10:23
---
 
-DROP TABLE IF EXISTS `agcms_users`;
 CREATE TABLE `agcms_users` (
   `ID` int(11) NOT NULL,
   `GROUP_ID` int(11) NOT NULL DEFAULT '4',
@@ -4911,10 +4826,7 @@ INSERT INTO `agcms_users` (`ID`, `GROUP_ID`, `FIRST_NAME`, `LAST_NAME`, `FATHER_
 --
 -- Структура таблицы `agcms_users_group`
 --
--- Создание: Мар 18 2020 г., 08:32
---
 
-DROP TABLE IF EXISTS `agcms_users_group`;
 CREATE TABLE `agcms_users_group` (
   `GROUP_ID` int(11) NOT NULL,
   `GROUP_NAME` varchar(255) NOT NULL,
@@ -5228,7 +5140,7 @@ ALTER TABLE `agcms_service_levels`
 -- AUTO_INCREMENT для таблицы `agcms_service_levels_g`
 --
 ALTER TABLE `agcms_service_levels_g`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `agcms_service_visa`

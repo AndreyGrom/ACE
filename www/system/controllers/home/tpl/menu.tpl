@@ -13,6 +13,7 @@
             <ul>
                 <li><a href="?c=home&act=vid">Видео на главной</a></li>
                 <li><a href="?c=home&act=spec">Спецпредложения</a></li>
+                <li><a href="?c=home&act=popular">Популярные курсы</a></li>
                 <li><a href="?c=home&act=rews">Отзывы</a></li>
             </ul>
         </div>

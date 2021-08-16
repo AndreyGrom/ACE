@@ -37,3 +37,17 @@ $(".week-sel").change(function(){
         }
     });
 });
+
+$(document).ready(function(){
+    var hash = window.location.hash.substr(1);
+    if (hash){
+        $('#collapse-' + hash).addClass('show');
+        $('#heading-' + hash + " h3").attr("aria-expanded", true);
+        $('html, body').animate({
+            scrollTop: $('#heading-' + hash).offset().top
+        }, {
+            duration: 100,
+            easing: "linear"
+        });
+    }
+});

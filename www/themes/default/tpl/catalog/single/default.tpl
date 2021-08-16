@@ -124,13 +124,13 @@
         {section name=i loop=$courses}
         <!-- CARD -->
         <div class="card">
-            <div class="card-header" id="heading-{$smarty.section.i.index}">
-                <h3 class="mb-0" data-toggle="collapse" data-target="#collapse-{$smarty.section.i.index}" aria-expanded="{if $smarty.section.i.index == 0}true{else}false{/if}" aria-controls="collapse-{$smarty.section.i.index}">
+            <div class="card-header" id="heading-{$courses[i].ID}">
+                <h3 class="mb-0" data-toggle="collapse" data-target="#collapse-{$courses[i].ID}" aria-expanded="{if $smarty.section.i.index == 0}true{else}false{/if}" aria-controls="collapse-{$courses[i].ID}">
                     <i class="fa fa-angle-double-right" aria-hidden="true"></i> {$courses[i].TITLE}
                 </h3>
             </div>
 
-            <div id="collapse-{$smarty.section.i.index}" class="collapse {if $smarty.section.i.index == 0}show{/if}" aria-labelledby="heading-{$smarty.section.i.index}" data-parent="#courseList">
+            <div id="collapse-{$courses[i].ID}" class="collapse {if $smarty.section.i.index == 0}show{/if}" aria-labelledby="heading-{$courses[i].ID}" data-parent="#courseList">
                 <div class="card-body">
 
                     <div class="row">
