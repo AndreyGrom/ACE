@@ -144,7 +144,7 @@
             $('.slick3').slick({
                 slidesToShow: {if count($popular) == 1}1{elseif count($popular) == 2}2{else}3{/if},
                 slidesToScroll: 1,
-                autoplay: true,
+                autoplay: false,
                 autoplaySpeed: 4000,
                 arrows: true,
                 responsive: [
