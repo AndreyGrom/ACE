@@ -250,5 +250,3 @@ $("#sort-select").change(function(){
     document.location.href = url;
     return false;
 });
-
-

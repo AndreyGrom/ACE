@@ -12,7 +12,7 @@
 
         <div class="row justify-content-between">
             <div class="col-md-6">
-                <form class="contacts__form ag-mail-form" method="post">
+                <form class="contacts__form ag-mail-form" method="post" >
                     <input type="hidden" name="form_id" value="1"/>
                     <h2 class="contacts__form-title">пишите нам:</h2>
 
@@ -26,13 +26,17 @@
 
                     <p>
                             <span class="input">
-                                <input name="f2" required class="input__control" type="email" placeholder="Email">
+                                {literal}
+                                <input name="f2" id="f2" required class="input__control" type="email" placeholder="Email">
+                                {/literal}
                             </span>
                     </p>
 
                     <p>
                             <span class="input">
-                                <input name="f3" required class="input__control" type="tel" placeholder="Телефон">
+                                 {literal}
+                                <input name="f3" id="f3" required class="input__control" type="number" placeholder="Телефон">
+                                 {/literal}
                             </span>
                     </p>
 
@@ -44,6 +48,8 @@
 
                     <button class="btn btn--blue btn--middle" type="submit">Отправить</button>
                 </form>
+
+
             </div>
 
             <div class="col-md-5">

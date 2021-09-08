@@ -3,23 +3,23 @@
         <div class="row">
             <div class="col-md-3 footer__column h-hide-mobile">
                 <ul class="footer__menu">
-                    <li><a href="">Каталог школ и курсов</a></li>
+                    <li><a href="/catalog">Каталог школ и курсов</a></li>
                 </ul>
 
                 <ul class="footer__menu">
                     <li>Среднее образование:</li>
-                    <li><a href="">США</a></li>
-                    <li><a href="">Англия</a></li>
-                    <li><a href="">Канада</a></li>
-                    <li><a href="">Швейцария</a></li>
+                    <li><a href="/services/usa">США</a></li>
+                    <li><a href="/services//england">Англия</a></li>
+                    <li><a href="/services/canada">Канада</a></li>
+                    <li><a href="/services/switzerland">Швейцария</a></li>
                 </ul>
 
                 <ul class="footer__menu">
                     <li>Высшее образование:</li>
-                    <li><a href="">США</a></li>
-                    <li><a href="">Англия</a></li>
-                    <li><a href="">Канада</a></li>
-                    <li><a href="">Швейцария</a></li>
+                    <li><a href="/services/usa_u">США</a></li>
+                    <li><a href="/services//england_u">Англия</a></li>
+                    <li><a href="/services/canada_u">Канада</a></li>
+                    <li><a href="/services/switzerland_u">Швейцария</a></li>
                 </ul>
 
                 <p class="footer__copyright">&copy;&nbsp;2019 Alpha Capital Education</p>
@@ -27,22 +27,23 @@
 
             <div class="col-md-5 h-hide-mobile">
                 <ul class="footer__menu">
-                    <li><a href="/postuplenie-na-tvorcheskie-specialnosti">Поступление на творческие специальности</a></li>
-                    <li><a href="/postuplenie-v-medicinskie-universitety">Поступление в медицинские университеты</a></li>
-                    <li><a href="/postuplenie-v-oksbridzh-oksford-i-kembridzh">Поступление в оксбридж (оксфорд и кембридж)</a></li>
+                    <li><a href="/services/tvorcheskie-specialnosti">Поступление на творческие специальности</a></li>
+                    <li><a href="/services/medicinskie-vuzy">Поступление в медицинские университеты</a></li>
+                    <li><a href="/services/oksbridzh">Поступление в оксбридж (оксфорд и кембридж)</a></li>
                 </ul>
 
                 <ul class="footer__menu">
-                    <li><a href="/opekunstvo-v-anglii">Опекунство в Англии</a></li>
+                    <li><a href="/services/opekunstvo-p">Опекунство в Англии</a></li>
                 </ul>
 
                 <ul class="footer__menu">
                     <li>Дополнительные услуги:</li>
-                    <li><a href="/planirovanie-i-razvitie-karery">Планирование и развитие карьеры</a></li>
-                    <li><a href="/detskie-sady-v-londone">Детские сады в Лондоне</a></li>
-                    <li><a href="/podbor-repetitorov-i-fakultativnyx-zanyatij-v-anglii">Подбор репетиторов и факультативных занятий в Англии </a></li>
-                    <li><a href="/vizovaya-podderzhka-immigracionnyx-advokatov-dlya-vsex-tipov-viz">Визовая поддержка иммиграционных адвокатов для всех типов виз</a></li>
-                    <li><a href="/oformlenie-viz">Оформление виз</a></li>
+                    <li><a href="/services/planirovanie-i-razvitie-karery">Планирование и развитие карьеры</a></li>
+                    <li><a href="/services/detskie-sady-v-londone">Детские сады в Лондоне</a></li>
+                    <li><a href="/services/podbor-repetitorov-i-fakultativnyx-zanyatij-v-anglii">Подбор репетиторов и факультативных занятий в Англии </a></li>
+                    <li><a href="/services/vizovaya-podderzhka-immigracionnyx-advokatov-dlya-vsex-tipov-viz">Визовая поддержка иммиграционных адвокатов для всех типов виз</a></li>
+                    <li><a href="/services/oformlenie-viz">Оформление виз</a></li>
+
                 </ul>
             </div>
 
@@ -100,6 +101,20 @@
         </div>
     </div>
 </footer>
+<div id="coockie-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-10">
+                <p>Мы используем cookie. Это позволяет нам анализировать взаимодействие посетителей с сайтом и делать его лучше. Продолжая пользоваться сайтом, вы соглашаетесь с использованием</p>
+            </div>
+            <div class="col-sm-2">
+                <button id="accept-coockies" class="btn btn-outline-warning" type="submit">Все понятно!</button>
+                <p><a href="http://yandex.ru">Мне это не надо</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 {*<script src="/themes/default/js/libs.js"></script>*}
 <script src="/system/plugins/ajaxupload.3.5.js"></script>
@@ -107,9 +122,23 @@
 <script src="/themes/default/js/libs.js"></script>
 <script src="/themes/default/js/main.js"></script>
 <script src="/themes/default/js/main2.js"></script>
+<script src="/themes/default/js/jquery.maskedinput.js"></script>
 <script src="/themes/default/js/ag.js"></script>
-<script type="text/javascript" src="/system/plugins/wz_tooltip/wz_tooltip.js"></script>
 
+<script type="text/javascript" src="/system/plugins/wz_tooltip/wz_tooltip.js"></script>
+<script>
+$(document).ready(function () {
+    $("#accept-coockies").click(function(){
+        $.cookie('conf', '1', { expires: 365, path: '/' });
+        $("#coockie-box").hide();
+    });
+
+    if ( $.cookie('conf') == null ) {
+        $("#coockie-box").show();
+
+    }
+});
+</script>
 {include file="./svg.tpl"}
 
 <script>

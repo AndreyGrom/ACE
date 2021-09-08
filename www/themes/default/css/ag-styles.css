@@ -21,7 +21,7 @@ body{
 #filter-form .input__control {
     -moz-appearance:textfield;
 }
-#filter-form .input__control, #filter-form .select,{
+#filter-form .input__control, #filter-form .select{
 /*    background-color: #f9f9f9 !important;*/
 }
 .mobile-header__btn{
@@ -107,7 +107,6 @@ input::placeholder{
 .btn--submit-filter{
     padding-left: 0;
     padding-right: 0;
-    padding-right: 0;
     width: 100%;
 }
 /* .search-sidebar {
@@ -118,7 +117,7 @@ input::placeholder{
 }
 .sticky {
     position: fixed;
-    top: 0px;
+    top: 0;
     z-index: 101;
 }
 .top-nat-box{
@@ -144,4 +143,24 @@ input::placeholder{
 .scroll{
     overflow: auto;
     max-height: 500px;
+}
+body .popular-courses .slick-next {
+    right: -20px;
+}
+body .popular-courses .slick-prev {
+    left: -20px;
+}
+#coockie-box{
+    width: 100%;
+    padding: 20px 0;
+    background-color: #569eb6;
+    top: auto;
+    bottom:0;
+    left: 0;
+    position: fixed;
+    display: none;
+}
+#coockie-box p{
+    color: #fff;
+
 }

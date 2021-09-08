@@ -1,5 +1,5 @@
 <div class="header__left">
-    <a href="/about-as">О компании</a>
+    <a href="/about-us">О компании</a>
     <ul class="header__social">
         <li>
             <a class="header__social-link" href="" title="Alpha Capital Education Instagram"

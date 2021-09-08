@@ -160,49 +160,6 @@
                 ]
             });
         </script>
-
-
-        {*<div class="row">
-            <div class="col-md-4">
-                <div class="popular-courses__item">
-                    <a href="">
-                        <img src="/themes/default/img/popular-courses.jpg" alt="">
-                        <div class="popular-courses__desc">
-                            <p class="popular-courses__address">Лондон, Великобритания</p>
-                            <p class="popular-courses__name">Интенсивный английский</p>
-                            <p class="popular-courses__price">от <span>£250</span> в неделю</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="popular-courses__item">
-                    <a href="">
-                        <img src="/themes/default/img/popular-courses.jpg" alt="">
-                        <div class="popular-courses__desc">
-                            <p class="popular-courses__address">Лондон, Великобритания</p>
-                            <p class="popular-courses__name">Интенсивный английский</p>
-                            <p class="popular-courses__price">от <span>£250</span> в неделю</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="popular-courses__item">
-                    <a href="">
-                        <img src="/themes/default/img/popular-courses.jpg" alt="">
-
-                        <div class="popular-courses__desc">
-                            <p class="popular-courses__address">Лондон, Великобритания</p>
-                            <p class="popular-courses__name">Интенсивный английский</p>
-                            <p class="popular-courses__price">от <span>£250</span> в неделю</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>*}
     </section>
 
     {if $rews}
