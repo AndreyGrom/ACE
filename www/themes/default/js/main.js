@@ -56,6 +56,7 @@ function () {
     this.setListeners();
   }
 
+  // Если что, расскомментить
   // _createClass(Select, [{
   //   key: "setListeners",
   //   value: function setListeners() {
