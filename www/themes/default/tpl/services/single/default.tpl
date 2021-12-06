@@ -49,6 +49,9 @@
                         {if $list[i].CAPT1}
                         <h2>{$list[i].CAPT1}</h2>
                         {/if}
+                            {if $list[i].CAPT3}
+                                <h4 class="sub-caption">{$list[i].CAPT3}</h4>
+                            {/if}
                         <div class="card card-services">
                             {if $list[i].TYPE != 3 && $list[i].TYPE != 4}
                             <div class="card-header" id="heading-{$smarty.section.i.index}">
@@ -167,7 +170,7 @@
                                                             value="{$list[i].PRICE_NEW}" />
                                                         <button type="submit" name="add-order"
                                                             class="btn btn-secondary">
-                                                            Заказать
+                                                            Заказатьs
                                                         </button>
                                                     </form>
                                                 </div>
@@ -270,6 +273,9 @@
                         {if $list[i].CAPT2}
                         <h2>{$list[i].CAPT2}</h2>
                         {/if}
+                            {if $list[i].CAPT4}
+                                <h4 class="sub-caption">{$list[i].CAPT4}</h4>
+                            {/if}
                         {/section}
 
                     </div>

@@ -370,7 +370,7 @@ class CatalogController extends Controller {
                 'sort' => $this->get['sort']
             ));
         } else {
-            //$sort = 'ORDER BY i.DATE_PUBL DESC';
+            $sort = 'ORDER BY i.RATING DESC';
         }
 
 
@@ -401,7 +401,7 @@ class CatalogController extends Controller {
 
         /*$sql .= " ORDER BY `DATE_PUBL` $sort";*/
   /*      $sql .= " GROUP BY i.ID ";*/
-        $sql .= $sort;
+        $sql .= " " . $sort;
 
 /*var_dump($sql);*/
 /*exit;*/
@@ -652,8 +652,28 @@ class CatalogController extends Controller {
                 }
             }
 
+            $from_aero = unserialize($item['FROM_AERO']);
+            $to_aero = unserialize($row['TO_AERO']);
+
+            $sql = "SELECT * FROM `agcms_catalog_aeros`";
+            $aeros = $this->db->select($sql);
+
+            foreach ($aeros as $a){
+                foreach ($from_aero as &$a1){
+                    if ($a['ID'] == $a1['id']){
+                        $a1['name']= $a['TITLE'];
+                    }
+                }
+                foreach ($to_aero as &$a2){
+                    if ($a['ID'] == $a2['id']){
+                        $a2['name']= $a['TITLE'];
+                    }
+                }
+            }
 
             $this->assign(array(
+                'from_aero'           => $from_aero,
+                'to_aero'             => $to_aero,
                 'item'             => $item,
                 'courses'             => $courses,
                 'pros'             => $pros,

@@ -56,19 +56,19 @@ function () {
     this.setListeners();
   }
 
-  _createClass(Select, [{
-    key: "setListeners",
-    value: function setListeners() {
-      this.$select.select2({
-        theme: 'main',
-        language: 'ru',
-        minimumResultsForSearch: -1 // опции для поиска в селекте
-        // selectionAdapter: $.fn.select2.amd.require('SearchableSingleSelection'),
-        // dropdownAdapter: $.fn.select2.amd.require('UnsearchableDropdown'),
-
-      });
-    }
-  }]);
+  // _createClass(Select, [{
+  //   key: "setListeners",
+  //   value: function setListeners() {
+  //     this.$select.select2({
+  //       theme: 'main',
+  //       language: 'ru',
+  //       minimumResultsForSearch: -1 // опции для поиска в селекте
+  //       // selectionAdapter: $.fn.select2.amd.require('SearchableSingleSelection'),
+  //       // dropdownAdapter: $.fn.select2.amd.require('UnsearchableDropdown'),
+  //
+  //     });
+  //   }
+  // }]);
 
   return Select;
 }();
@@ -211,6 +211,9 @@ $(".confirm").click(function(e){
         e.preventDefault();
     }
 });
+
+
+
 
 
 $(function(){

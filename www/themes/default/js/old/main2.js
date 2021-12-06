@@ -45,6 +45,7 @@ $( document ).ready(function() {
 
     $('.select-price').change(function(){
         var str = $(this).closest('.course-price').find('.j_price').text();
+        var str2 = '';
         var arr = JSON.parse(str);
         var cl = $(this).val();
         var i, j, price, ot2, ddo2;
@@ -53,11 +54,14 @@ $( document ).ready(function() {
         for (i = 0; i < arr.length; ++i) {
             if (arr[i][0] == cl){
                 for (j = 0; j < arr[i][1].length; ++j){
+                    str2 += '<tr><td>' + arr[i][1][j][0] +'</td><td>' + arr[i][1][j][1] +'</td><td>' + Curr() + arr[i][1][j][2] +'</td></tr>';
                     ot.push(arr[i][1][j][0]);
                     ddo.push(arr[i][1][j][1]);
                 }
             }
         }
+        $(this).closest(".card-body").find(".sel-table tbody").html(str2);
+        $(this).closest(".card-body").find(".sel-table").show();
 
         str = '<option value="0">Выбрать</option>';
         for (i = Math.min.apply(null, ot); i < Math.max.apply(null, ddo) + 1; ++i) {
@@ -244,8 +248,9 @@ $( document ).ready(function() {
         } else{
 
         }
-        $.cookie('cart', JSON.stringify(cart), { path: '/', expires: 180});
-        document.location.href = '/catalog/cart/';
+        return false;
+        //$.cookie('cart', JSON.stringify(cart), { path: '/', expires: 180});
+        //document.location.href = '/catalog/cart/';
     });
 
     $('#add-order-form').submit(function(){
@@ -253,7 +258,10 @@ $( document ).ready(function() {
             alert('Ничего не выбрано');
             return false;
         }
+
         $('#order-j').text(JSON.stringify(course));
+      /*  console.log(course);
+        return false*/
     });
 
 
@@ -375,13 +383,13 @@ $( document ).ready(function() {
         return titles[ (number%100>4 && number%100<20)? 2 : cases[(number%10<5)?number%10:5] ];
     }
 
-	$('#accomodationList').collapse({
+	/*$('#accomodationList').collapse({
 	  toggle: false
-	});
+	});*/
 
-	$(function () {
+	/*$(function () {
 	  $('[data-toggle="tooltip"]').tooltip()
-	});
+	});*/
 
 
 
@@ -393,12 +401,6 @@ $( document ).ready(function() {
     });
 
 
-});
-
-$(".select-aero").change(function(){
-    var p = $(this).val()
-    $(this).parent().parent().attr('data-price', p);
-    $(this).parent().parent().find('.price-aero span').text(p);
 });
 
     var a = document.querySelector('#inner'), b = null;
@@ -434,4 +436,5 @@ $(".select-aero").change(function(){
             }, false);
         }
     }
+
 

@@ -76,7 +76,7 @@
                                 {if $items[i].P_TOP}<span class="tag tag--green">для топ менеджеров</span>{/if}
                             </p>
                         </div>
-                        <div class="product__price"> от {$items[i].MIN_PRICE} {$items[i].C_ZN} <span>в неделю</span></div>
+                        <div class="product__price"> от {round($items[i].MIN_PRICE)} {$items[i].C_ZN} <span>в неделю</span></div>
                     </a>
                 {/section}
             </div>

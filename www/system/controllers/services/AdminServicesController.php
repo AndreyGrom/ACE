@@ -394,6 +394,8 @@ class AdminServicesController extends AdminController {
             'LEVEL_ID' => $this->post['level'],
             'CAPT1' => $this->post['capt1'],
             'CAPT2' => $this->post['capt2'],
+            'CAPT3' => $this->post['capt3'],
+            'CAPT4' => $this->post['capt4'],
             'SORT' => ($this->post['sort'] !=='')?$this->post['sort']:9999,
             'GID' => $this->post['gid'],
         );

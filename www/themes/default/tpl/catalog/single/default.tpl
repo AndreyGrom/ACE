@@ -118,7 +118,7 @@
 <div class="section section-courses" id="section-courses">
     <h2>Курсы</h2>
 
-    <p class="note"><i class="fas fa-percentage" aria-hidden="true"></i>Бронируя курсы через нашу компанию, вы получаете возможность <b>скидки 10%</b> от стоимости школы, делая это напрямую.</p>
+    <p class="note"><i class="fas fa-percent" aria-hidden="true"></i>Бронируя курсы через нашу компанию, вы получаете возможность <b>скидки 10%</b> от стоимости школы, делая это напрямую.</p>
 
     <div id="courseList">
         {section name=i loop=$courses}
@@ -126,7 +126,7 @@
         <div class="card">
             <div class="card-header" id="heading-{$courses[i].ID}">
                 <h3 class="mb-0" data-toggle="collapse" data-target="#collapse-{$courses[i].ID}" aria-expanded="{if $smarty.section.i.index == 0}true{else}false{/if}" aria-controls="collapse-{$courses[i].ID}">
-                    <i class="fa fa-angle-double-right" aria-hidden="true"></i> {$courses[i].TITLE}
+                    <i class="fa fa-chevron-right" aria-hidden="true"></i> {$courses[i].TITLE}
                 </h3>
             </div>
 
@@ -176,7 +176,7 @@
                             </select>
                         </div>*}
 
-                        <div class="col-md-4 course-price">
+                        <div class="col-md-3 course-price">
                             <span class="label">Часы: </span>
                             <span style="display: none;" class="j_price">{$courses[i].PACKS}</span>
                             <span style="display: none;" class="j_price_n"></span>
@@ -188,7 +188,7 @@
                             </select>
 
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <div style="display: none;">
                                 <span class="label">Недели: </span>
                                 <select class="custom-select select-price-2 select js-select form-control">
@@ -214,22 +214,6 @@
                         </div>
 
                     </div>
-                   <div class="sel-table" style="display: none;">
-                       <p class="title">Система скидок:</p>
-                       <table class="table sel-table">
-                           <thead>
-
-                           <tr>
-                               <th>Недели от</th>
-                               <th>Недели до</th>
-                               <th>Стоимость недели</th>
-                           </tr>
-                           </thead>
-                           <tbody>
-
-                           </tbody>
-                       </table>
-                   </div>
                 </div>
             </div>
         </div>
@@ -372,6 +356,7 @@
                     <tr class="dop_price" data-name="{$dops[j].TITLE}" data-id="{$dops[j].ID}" data-price="{$item.DOPS[i][1]}">
                         <td><input class="form-check-input" type="checkbox" value="" checked disabled></td>
                         <td class="dop-title">{$dops[j].TITLE}</td>
+                        <td></td>
                         <td>{$item.C_ZN}{$item.DOPS[i][1]}</td>
                     </tr>
                 {/if}
@@ -380,7 +365,7 @@
         {/if}
 
         {if $b}
-        <tr><th colspan="3">На выбор</th></tr>
+        <tr><th colspan="4">На выбор</th></tr>
          {*   {$item.DOPS|debug_print_var}*}
         {section name=i loop=$item.DOPS}
             {section name=j loop=$dops}
@@ -388,12 +373,61 @@
                     <tr class="dop_price" data-name="{$dops[j].TITLE}" data-id="{$dops[j].ID}" data-price="{$item.DOPS[i][1]}">
                         <td><input class="form-check-input" type="checkbox" value="" id=""></td>
                         <td class="dop-title">{$dops[j].TITLE}</td>
-                        <td>{$item.C_ZN}{$item.DOPS[i][1]}</td>
+
+                            {if $dops[j].ID == 5 || $dops[j].ID == 6}
+                                    {if $dops[j].ID == 5 }
+                                    <td>
+                                        <select class="custom-select select-aero select js-select form-control">
+                                            {section name=k loop=$from_aero}
+                                            <option value="{$from_aero[k].price}">{$from_aero[k].name}</option>
+                                            {/section}
+                                        </select>
+                                    </td>
+                                        <td class="price-aero">{$item.C_ZN}<span>{$from_aero[0].price}</span></td>
+
+                                    {elseif $dops[j].ID == 6 }
+                                        <td>
+                                            <select class="custom-select select-aero select js-select form-control">
+                                                {section name=k loop=$to_aero}
+                                                    <option value="{$to_aero[k].price}">{$to_aero[k].name}</option>
+                                                {/section}
+                                            </select>
+                                        </td>
+                                        <td class="price-aero">{$item.C_ZN}<span>{$to_aero[0].price}</span></td>
+                                    {/if}
+                            {else}
+                                <td></td>
+                                <td>{$item.C_ZN}{$item.DOPS[i][1]}</td>
+
+                            {/if}
                     </tr>
                 {/if}
             {/section}
         {/section}
         {/if}
+
+
+   {*     <tr class="dop_price" data-name="{$dops[j].TITLE}" data-id="{$dops[j].ID}" data-price="{$item.DOPS[i][1]}">
+            <td><input class="form-check-input" type="checkbox" value="" id=""></td>
+            <td class="dop-title">
+                Трансфер из аэропорта:
+                <select class="custom-select select-price select js-select form-control">
+                    <option value="">Heathrow</option>
+                </select>
+            </td>
+            <td>Цена</td>
+        </tr>
+
+        <tr class="dop_price" data-name="{$dops[j].TITLE}" data-id="{$dops[j].ID}" data-price="{$item.DOPS[i][1]}">
+            <td><input class="form-check-input" type="checkbox" value="" id=""></td>
+            <td class="dop-title">
+                Трансфер в аэропорт:
+                <select class="custom-select select-price select js-select form-control">
+                    <option value="">Heathrow</option>
+                </select>
+            </td>
+            <td>Цена</td>
+        </tr>*}
 
         {if $c}
         <tr><th colspan="3">Не включенные расходы:</th></tr>

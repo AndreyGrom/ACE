@@ -3,23 +3,14 @@ var cart = {};
 
 cart.list = [];
 course.id = $("#sh_id").val();
-course.c_name = $("#sh_name").val();
-course.c_currency = $("#c_currency").val();
-course.c_photo = $("#c_photo").val();
-course.c_alias = $("#c_alias").val();
 course.c_list = [];
 course.p_list = [];
 course.d_list = [];
-
-var c_current = {};
-var c_id = $("#sh_id").val();
-var c_name = $("#sh_name").val();
-var c_currency = $("#c_currency").val();
 var inner = $("#inner");
 
 function Curr(){
     var rss;
-    rss = $("#c_currency").val() + ' ';
+    rss = $("#curr").text() + ' ';
     return rss;
 }
 
@@ -42,9 +33,9 @@ $( document ).ready(function() {
         btn.attr('data-count-n', $(this).val());
     });
 
-
     $('.select-price').change(function(){
-        var str = $(this).closest('.course-price').find('.j_price').text();
+        var str = $(this).parent().find('.j_price').text();
+        var str2 = '';
         var arr = JSON.parse(str);
         var cl = $(this).val();
         var i, j, price, ot2, ddo2;
@@ -53,44 +44,49 @@ $( document ).ready(function() {
         for (i = 0; i < arr.length; ++i) {
             if (arr[i][0] == cl){
                 for (j = 0; j < arr[i][1].length; ++j){
+                    str += '<tr><td>' + arr[i][1][j][0] +'</td><td>' + arr[i][1][j][1] +'</td><td>' + Curr() + arr[i][1][j][2] +'</td></tr>';
                     ot.push(arr[i][1][j][0]);
                     ddo.push(arr[i][1][j][1]);
                 }
             }
         }
-
+        $(this).parent().parent().find(".sel-table tbody").html(str);
         str = '<option value="0">Выбрать</option>';
         for (i = Math.min.apply(null, ot); i < Math.max.apply(null, ddo) + 1; ++i) {
-            str += '<option data-ot="' + ot + '" data-do="' + ddo + '" value="' + i + '">' + i + '</option>';
+            str += '<option value="' + i + '">' + i + '</option>';
         }
-
-        $(this).closest(".card-body").find(".select-price-2").html(str).parent().show();
+        $(this).parent().parent().find(".select-price-2").html(str);
     });
 
     $('.select-price-2').change(function(){
         var th2 = $(this).val();
         if (th2 == 0) {return false}
-        var str = $(this).closest(".card-body").find(".j_price").text();
-        var th = $(this).closest(".card-body").find(".select-price").val();
+        var str = $(this).parent().parent().find('.j_price').text();
+        var th = $(this).parent().parent().find('.select-price').val();
+
         var arr = JSON.parse(str);
         var i;
-        //var btn = $(this).parent().parent().find('button');
-        var btn = $(this).closest(".card-body").find("button");
+        var btn = $(this).parent().parent().find('button');
+
         for (i = 0; i < arr.length; ++i) {
 
             if (arr[i][0] == th){
+              // console.log(arr[i][1]);
                 for (j = 0; j < arr[i][1].length; ++j){
+                    //console.log(arr[i][1][j][0]);
+                    //console.log(arr[i][1][j][1]);
+                    //console.log(th2);
+                    //if (th2 >= arr[i][1][j][0] && th2 <=  arr[i][1][j][1]){
+                    //alert(arr[i][1][j][0] + ' | ' + arr[i][1][j][1] + ' | ' + th2);
                     if (Number(arr[i][1][j][0]) <= Number(th2) && Number(arr[i][1][j][1]) >= Number(th2)){
+
                         btn.attr('data-p', arr[i][1][j][2] * th2);
-                        btn.attr('data-ot', arr[i][1][j][0]);
-                        btn.attr('data-do', arr[i][1][j][1]);
-                        btn.attr('data-price-one', arr[i][1][j][2]);
-                        btn.attr('data-count', th);
                         btn.attr('data-count-n', th2);
-                        $(this).closest(".card-body").find(".curr-price").text(Curr() + arr[i][1][j][2] * th2);
+
+                        $(this).parent().parent().find(".curr-price").text(Curr() + arr[i][1][j][2] * th2);
+                        //alert(arr[i][1][j][2] * th2);
                     }
                 }
-                btn.show();
             }
         }
     });
@@ -117,13 +113,10 @@ $( document ).ready(function() {
             list.name = $(this).attr('data-course-name');
             list.price = $(this).attr('data-p');
             list.price_new = $(this).attr('data-p_n');
+
             list.count_n = $(this).attr('data-count-n');
-            list.ot = $(this).attr('data-ot');
-            list.do = $(this).attr('data-do');
-            list.price_one = $(this).attr('data-price-one');
-            list.count = $(this).attr('data-count');
             course.c_list.push(list);
-        //console.log(course.c_list);
+        console.log(course.c_list);
         //}
 
         Write_box();
@@ -157,9 +150,7 @@ $( document ).ready(function() {
             var list = {};
             list.id = $(this).attr('data-id');
             list.name = $(this).attr('data-name');
-            list.vid = $(this).attr('data-vid');
             list.price = $(this).attr('data-price');
-            list.photo = $(this).attr('data-photo');
             course.p_list.push(list);
         //}
 
@@ -221,7 +212,6 @@ $( document ).ready(function() {
     }
 
     $('.add-to-cart').click(function(){
-        cart = [];
         if (course.c_list.length == 0){
             alert('Ничего не выбрано');
             return false;
@@ -230,30 +220,28 @@ $( document ).ready(function() {
         if (($.cookie('cart'))){
             cart = $.parseJSON($.cookie('cart'));
         }
-        if (cart.length > 0){
-            for (i = 0; i < cart.length; i++){
-                if (cart[i].id == course.id){
-                    cart[i] = course;
+        if (cart.list.length > 0){
+            for (i = 0; i < cart.list.length; i++){
+                if (cart.list[i].id == course.id){
+                    cart.list[i] = course;
                     n = true;
                 }
             }
         }
         if (n ==  false){
-            cart.push(course);
-
+            cart.list.push(course);
+            //alert('Добавлено в корзину');
         } else{
-
+            //alert('Корзина обновлена');
         }
+
+        //$("#Modal1").modal('show');
+
         $.cookie('cart', JSON.stringify(cart), { path: '/', expires: 180});
-        document.location.href = '/catalog/cart/';
-    });
 
-    $('#add-order-form').submit(function(){
-        if (course.c_list.length == 0){
-            alert('Ничего не выбрано');
-            return false;
-        }
-        $('#order-j').text(JSON.stringify(course));
+        /*cart = JSON.parse($.cookie('cart'));
+        console.log(cart);*/
+        document.location.href = '/catalog/cart/';
     });
 
 
@@ -281,94 +269,7 @@ $( document ).ready(function() {
 
     });
 
-    $('#select-country').change(function(){
-        if ($(this).val() == 0){
-            $("#select-visa").hide().html('');
-            $(".visa-price").hide().text('');
-            $(".btn-select-visa").hide();
-            return false;
-        }
-        $("#select-visa").show().html('<option value="0">Загрузка...</option>');
-        $(".visa-price").hide().text('');
-        $(".btn-select-visa").hide();
-        $.ajax({
-            url: '/system/controllers/services/ajax.php',
-            method: 'post',
-            data: "cid=" + $(this).val(),
-            success: function(data){
-                if (data != '[]'){
-                    var arr = JSON.parse(data);
-                    var i;
-                    var str;
-                    str = '<option value="0">Тип визы</option>';
-                    for (i = 0; i < arr.length; ++i) {
-                        str += '<option data-c_zn="' + arr[i].C_ZN + '" data-cur="' + arr[i].C_CURRENCY + '" data-price="' + arr[i].PRICE + '" data-price_new="' + arr[i].PRICE_NEW + '" value="' + arr[i].ID + '">' + arr[i].TYPE +'</option>';
-                    }
-                    $("#select-visa").show().html(str);
-                } else{
-                    $("#select-visa").show().html('<option value="0">Ничего не найдено</option>');
-                    $(".visa-price").hide().text('');
-                    $(".btn-select-visa").hide();
 
-                }
-            }
-
-        });
-    });
-    $("#select-visa").change(function(){
-        if ($(this).val() == 0){
-            $(".visa-price").hide().text('');
-            $(".btn-select-visa").hide();
-            return false;
-        }
-        var el = $('#select-visa option:selected')
-        //alert(el.data('price'));
-        if (el.data('price_new')){
-            $('.price').html(el.data('c_zn') + el.data('price') + el.data('c_zn'));
-            $('.price').show();
-            $('.price_new').text(el.data('c_zn') + el.data('price_new'));
-            $('.price_new').show();
-        } else{
-            $('.price').hide();
-            $('.price_new').show();
-            $('.price_new').text(el.data('c_zn') + el.data('price_new'));
-        }
-
-        $(".btn-select-visa").show();
-        $(".btn-select-visa").parent().find('input[name="c_zn"]').val(el.data('c_zn'));
-        $(".btn-select-visa").parent().find('input[name="cur"]').val(el.data('cur'));
-        $(".btn-select-visa").parent().find('input[name="price"]').val(el.data('price'));
-        $(".btn-select-visa").parent().find('input[name="price_new"]').val(el.data('price_new'));
-        $(".btn-select-visa").parent().find('input[name="name"]').val('Оформление визы : ' + el.text());
-    });
-
-    $(".select-level").change(function(){
-        var el = $("option:selected", this);
-        var el1 = $(this).parent().parent().find(".text-price");
-        var btn =  $(this).parent().parent().find(".btn-select-level");
-        if ($(this).val() == 0){
-            btn.hide();
-            el1.text('');
-
-        } else {
-            if (el.data('price_new')){
-                el1.html(el.data('c_zn') + el.data('price') + el.data('c_zn'));
-                el1.show();
-                /*$('.price-level_new').text(el.data('c_zn') + el.data('price_new'));
-                 $('.price-level_new').show();*/
-            } else{
-                el1.hide();
-                el1.show();
-                el1.text(el.data('c_zn') + el.data('price_new'));
-            }
-            el1.text(el.data('c_zn') + el.data('price'));
-            btn.show();
-            btn.parent().find('input[name="price"]').val(el.data('price'));
-            btn.parent().find('input[name="price_new"]').val(el.data('price_new'));
-            btn.parent().find('input[name="name"]').val('Репетитор, : ' + el.text());
-        }
-
-    });
 
     function declOfNum(number, titles) {
         cases = [2, 0, 1, 1, 1, 2];
@@ -392,46 +293,37 @@ $( document ).ready(function() {
         return false;
     });
 
-
 });
 
-$(".select-aero").change(function(){
-    var p = $(this).val()
-    $(this).parent().parent().attr('data-price', p);
-    $(this).parent().parent().find('.price-aero span').text(p);
-});
 
     var a = document.querySelector('#inner'), b = null;
-    if (a != undefined){
-        window.addEventListener('scroll', Ascroll, false);
-        document.body.addEventListener('scroll', Ascroll, false);
-        function Ascroll() {
-            if (b == null) {
-                var Sa = getComputedStyle(a, ''), s = '';
-                for (var i = 0; i < Sa.length; i++) {
-                    if (Sa[i].indexOf('overflow') == 0 || Sa[i].indexOf('padding') == 0 || Sa[i].indexOf('border') == 0 || Sa[i].indexOf('outline') == 0 || Sa[i].indexOf('box-shadow') == 0 || Sa[i].indexOf('background') == 0) {
-                        s += Sa[i] + ': ' +Sa.getPropertyValue(Sa[i]) + '; '
-                    }
+    window.addEventListener('scroll', Ascroll, false);
+    document.body.addEventListener('scroll', Ascroll, false);
+    function Ascroll() {
+        if (b == null) {
+            var Sa = getComputedStyle(a, ''), s = '';
+            for (var i = 0; i < Sa.length; i++) {
+                if (Sa[i].indexOf('overflow') == 0 || Sa[i].indexOf('padding') == 0 || Sa[i].indexOf('border') == 0 || Sa[i].indexOf('outline') == 0 || Sa[i].indexOf('box-shadow') == 0 || Sa[i].indexOf('background') == 0) {
+                    s += Sa[i] + ': ' +Sa.getPropertyValue(Sa[i]) + '; '
                 }
-                b = document.createElement('div');
-                b.style.cssText = s + ' box-sizing: border-box; width: ' + a.offsetWidth + 'px;';
-                a.insertBefore(b, a.firstChild);
-                var l = a.childNodes.length;
-                for (var i = 1; i < l; i++) {
-                    b.appendChild(a.childNodes[1]);
-                }
-                a.style.height = b.getBoundingClientRect().height + 'px';
-                a.style.padding = '0';
-                a.style.border = '0';
             }
-            if (a.getBoundingClientRect().top <= 0) {
-                b.className = 'sticky';
-            } else {
-                b.className = '';
+            b = document.createElement('div');
+            b.style.cssText = s + ' box-sizing: border-box; width: ' + a.offsetWidth + 'px;';
+            a.insertBefore(b, a.firstChild);
+            var l = a.childNodes.length;
+            for (var i = 1; i < l; i++) {
+                b.appendChild(a.childNodes[1]);
             }
-            window.addEventListener('resize', function() {
-                a.children[0].style.width = getComputedStyle(a, '').width
-            }, false);
+            a.style.height = b.getBoundingClientRect().height + 'px';
+            a.style.padding = '0';
+            a.style.border = '0';
         }
+        if (a.getBoundingClientRect().top <= 0) {
+            b.className = 'sticky';
+        } else {
+            b.className = '';
+        }
+        window.addEventListener('resize', function() {
+            a.children[0].style.width = getComputedStyle(a, '').width
+        }, false);
     }
-

@@ -33,6 +33,7 @@
                 <li> <a href="?c=catalog&act=dops">Расходы</a></li>
                 <li> <a href="?c=catalog&act=incs">Что включено</a></li>
                 <li> <a href="?c=catalog&act=predmets">Предметы</a></li>
+                <li> <a href="?c=catalog&act=aeros">Аэропорты</a></li>
             </ul>
         </div>
     </div>

@@ -42,6 +42,7 @@
     <link rel="stylesheet" href="/themes/default/css/ag-styles.css">
 
     <script async type="text/javascript" src="/system/controllers/mailforms/action.js"></script>
+
 </head>
 
 <body {if $module_name == 'catalog' || $module_name == 'services'}class="body-school"{/if}>

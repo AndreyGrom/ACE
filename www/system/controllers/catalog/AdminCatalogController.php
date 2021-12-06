@@ -147,7 +147,14 @@ class AdminCatalogController extends AdminController {
             $dops[] =  array($d, $this->post['dop_price_' . $d]);
         }
 
-
+        $from_aeros = array();
+        foreach($this->post['from-aeros'] as $from){
+            $from_aeros[] = array('id' => $from, 'price' => $this->post["from-aeros_" . $from]);
+        }
+        $to_aeros = array();
+        foreach($this->post['to-aeros'] as $from){
+            $to_aeros[] = array('id' => $from, 'price' => $this->post["to-aeros_" . $from]);
+        }
         $params = array(
             'NET_ID'     => $this->post['net_id'],
             'COUNTRY_ID'     => $this->post['country_id'],
@@ -181,6 +188,8 @@ class AdminCatalogController extends AdminController {
             'PDF'   => $pdf,
             'DOPS'   => serialize($dops),
             'RATING'   => $this->post['rating'],
+            'FROM_AERO'   => serialize($from_aeros),
+            'TO_AERO'   => serialize($to_aeros),
         );
 
 
@@ -431,15 +440,24 @@ class AdminCatalogController extends AdminController {
                 $city[] = $row2;
             }
         }*/
+        $from_aero = unserialize($row['FROM_AERO']);
+        $to_aero = unserialize($row['TO_AERO']);
 
         $sql = "SELECT * FROM `agcms_catalog_nets`";
         $nets = $this->db->select($sql);
+
+        $sql = "SELECT * FROM `agcms_catalog_aeros`";
+        $aeros = $this->db->select($sql);
+
         $this->assign(array(
+            'from_aero'                    => $from_aero,
+            'to_aero'                    => $to_aero,
             'countrys'                    => $countrys,
             'regions'                    => $regions,
             'city'                    => $city,
             'nets'                    => $nets,
             'item'                     => $row,
+            'aeros'                     => $aeros,
             'dops'                     => $this->GetDops(),
             'templates'                => Func::getInstance()->getTemplates($this->templates_dir.'catalog/single/'),
         ));
@@ -948,6 +966,43 @@ class AdminCatalogController extends AdminController {
         $this->Head('?c=catalog&act=predmets');
     }
 
+    public function ShowAeros(){
+        $sql = "SELECT * FROM agcms_catalog_aeros";
+        $items = $this->db->select($sql);
+        $this->assign(array(
+            'items' => $items
+        ));
+        $this->content = $this->SetTemplate('aeros.tpl');
+    }
+    public function ShowAero(){
+        if ($this->get['id'] > 0){
+            $sql = "SELECT * FROM agcms_catalog_aeros WHERE ID = " . $this->get['id'] . " LIMIT 1";
+            $item = $this->db->select($sql);
+            $this->assign(array(
+                'item' => $item[0]
+            ));
+        }
+        $this->content = $this->SetTemplate('aero.tpl');
+    }
+
+    public function SaveAero(){
+        $params = array(
+            'TITLE' => $this->post['title']
+        );
+        if ($this->get['id'] > 0){
+            $this->db->update('agcms_catalog_aeros', $params, "ID = " . $this->get['id']);
+        } else {
+            $this->db->insert('agcms_catalog_aeros', $params);
+        }
+        $this->Head('?c=catalog&act=aeros');
+    }
+
+    public function DeleteAero(){
+        $sql = "DELETE FROM agcms_catalog_aeros WHERE ID = " . $this->get['id'];
+        $this->db->query($sql);
+
+        $this->Head('?c=catalog&act=aeros');
+    }
     public function Index(){
 
         $this->SetPlugins();
@@ -984,6 +1039,9 @@ class AdminCatalogController extends AdminController {
         }
         if (isset($this->post['save-predmet'])){
             $this->SavePredmet();
+        }
+        if (isset($this->post['save-aero'])){
+            $this->SaveAero();
         }
         $this->categories = $this->getCategories();
         if(count($this->categories) == 0 && !isset($this->act)){
@@ -1028,6 +1086,15 @@ class AdminCatalogController extends AdminController {
         }
         elseif ($this->act == 'dops'){
             $this->ShowDops();
+        }
+        elseif ($this->act == 'aeros'){
+            $this->ShowAeros();
+        }
+        elseif ($this->act == 'aero'){
+            $this->ShowAero();
+        }
+        elseif ($this->act == 'del-aero'){
+            $this->DeleteAero();
         }
         elseif ($this->act == 'inc'){
             $this->ShowInc();

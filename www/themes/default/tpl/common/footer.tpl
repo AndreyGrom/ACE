@@ -118,16 +118,19 @@
 
 {*<script src="/themes/default/js/libs.js"></script>*}
 <script src="/system/plugins/ajaxupload.3.5.js"></script>
-<script src="/themes/default/js/bootstrap.min.js"></script>
-<script src="/themes/default/js/libs.js"></script>
+<script src="/themes/default/js/popper.min.js"></script>
+<script src="/themes/default/js/bootstrap4.min.js"></script>
+{*<script src="/themes/default/js/bootstrap.js"></script>*}
+{*<script src="/themes/default/js/libs.js"></script>
 <script src="/themes/default/js/main.js"></script>
 <script src="/themes/default/js/main2.js"></script>
 <script src="/themes/default/js/jquery.maskedinput.js"></script>
 <script src="/themes/default/js/ag.js"></script>
 
-<script type="text/javascript" src="/system/plugins/wz_tooltip/wz_tooltip.js"></script>
+{*<script type="text/javascript" src="/system/plugins/wz_tooltip/wz_tooltip.js"></script>*}
 <script>
 $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
     $("#accept-coockies").click(function(){
         $.cookie('conf', '1', { expires: 365, path: '/' });
         $("#coockie-box").hide();

@@ -36,9 +36,21 @@
                     </div>
                 </div>
                 <div class="form-group type1 type2 type3 type4">
+                    <label for="c_title" class="col-sm-3 control-label">Подзаголовок верхний:</label>
+                    <div class="col-sm-9">
+                        <input value="{$item.CAPT3}" name="capt3" type="text" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group type1 type2 type3 type4">
                     <label for="c_title" class="col-sm-3 control-label">Заголовок нижний:</label>
                     <div class="col-sm-9">
                         <input value="{$item.CAPT2}" name="capt2" type="text" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group type1 type2 type3 type4">
+                    <label for="c_title" class="col-sm-3 control-label">Подзаголовок нижний:</label>
+                    <div class="col-sm-9">
+                        <input value="{$item.CAPT4}" name="capt4" type="text" class="form-control" placeholder="">
                     </div>
                 </div>
                 <div class="form-group type1 type2 type3">

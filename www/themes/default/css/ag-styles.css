@@ -164,3 +164,8 @@ body .popular-courses .slick-prev {
     color: #fff;
 
 }
+#courseList2 .sub-caption{
+    margin-top: -20px;
+    color: gray;
+    font-size: 16px;
+}
